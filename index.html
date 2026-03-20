@@ -57,8 +57,10 @@ body::before{content:'';position:fixed;inset:0;z-index:0;pointer-events:none;bac
 .icon-btn:hover{color:var(--text);border-color:var(--border-hi)}.icon-btn.danger:hover{color:var(--red);border-color:rgba(239,68,68,0.3);background:rgba(239,68,68,0.08)}
 .folder-name{font-size:20px;font-weight:700}.folder-meta{font-size:13px;color:var(--muted);margin-top:8px}
 .section-row{display:flex;align-items:center;justify-content:space-between;margin:36px 0 18px}
-.section-label{font-size:11px;font-weight:600;letter-spacing:3px;text-transform:uppercase;color:var(--dim);display:flex;align-items:center;gap:14px}
+.section-label{font-size:11px;font-weight:600;letter-spacing:3px;text-transform:uppercase;color:var(--dim);display:flex;align-items:center;gap:14px;cursor:pointer;padding:4px 8px;margin:-4px -8px;border-radius:6px;border:1px solid transparent;transition:all .2s}
+.section-label:hover{border-color:var(--border);background:rgba(255,255,255,0.02)}
 .section-label::after{content:'';width:60px;height:1px;background:var(--border)}
+.section-label-input{font-size:11px;font-weight:600;letter-spacing:3px;text-transform:uppercase;background:var(--bg);border:1px solid rgba(139,92,246,0.4);border-radius:6px;padding:4px 8px;color:var(--dim);font-family:var(--font);outline:none}
 .upload-btn{display:flex;align-items:center;gap:6px;font-size:12px;color:var(--accent2);cursor:pointer;padding:7px 16px;border-radius:10px;background:rgba(6,182,212,0.08);border:1px solid rgba(6,182,212,0.15);font-family:var(--font);transition:all .2s}
 .upload-btn:hover{background:rgba(6,182,212,0.15);color:#22d3ee}
 .upload-btn svg{width:14px;height:14px;stroke:currentColor;fill:none;stroke-width:2}
@@ -93,23 +95,11 @@ body::before{content:'';position:fixed;inset:0;z-index:0;pointer-events:none;bac
 .kpi-box{background:rgba(255,255,255,0.03);border:1px solid var(--border);border-radius:12px;padding:16px;text-align:center}
 .kpi-label{font-size:10px;text-transform:uppercase;letter-spacing:1.5px;color:var(--dim);font-weight:600}
 .kpi-val{font-size:18px;font-weight:700;font-family:var(--mono);margin-top:6px}
-.kpi-val.g{color:var(--green)}.kpi-val.r{color:var(--red)}.kpi-val.b{color:var(--accent2)}
+.kpi-val.g{color:var(--green)}.kpi-val.r{color:var(--red)}.kpi-val.b{color:var(--accent2)}.kpi-val.a{color:var(--accent)}
 .params-row{display:grid;grid-template-columns:repeat(auto-fill,minmax(110px,1fr));gap:10px}
 .param-chip{background:rgba(255,255,255,0.03);border:1px solid var(--border);border-radius:10px;padding:12px;text-align:center}
 .param-chip-label{font-size:9px;color:var(--dim);text-transform:uppercase;letter-spacing:1px;font-weight:600}
 .param-chip-val{font-size:15px;font-weight:700;font-family:var(--mono);margin-top:4px}
-.chat-area{display:flex;flex-direction:column;gap:22px}
-.chat-msg{display:flex;gap:14px;align-items:flex-start}
-.chat-av{width:36px;height:36px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:700;flex-shrink:0;color:#fff}
-.av-t{background:linear-gradient(135deg,var(--accent),#7c3aed)}.av-d{background:linear-gradient(135deg,var(--accent2),#0891b2)}
-.chat-body{flex:1}.chat-name{font-size:12px;font-weight:600;margin-bottom:8px;display:flex;align-items:center;gap:10px}
-.chat-name .time{font-weight:400;color:var(--dim);font-size:11px}
-.chat-bubble{background:var(--bg2);border:1px solid var(--border);border-radius:4px 16px 16px 16px;padding:16px 20px;font-size:14px;line-height:1.6;max-width:80%}
-.chat-msg.me .chat-bubble{background:rgba(139,92,246,0.08);border-color:rgba(139,92,246,0.15);border-radius:16px 4px 16px 16px}
-.chat-input-row{display:flex;gap:12px;margin-top:24px;padding-top:24px;border-top:1px solid var(--border)}
-.chat-input{flex:1;background:var(--bg2);border:1px solid var(--border);border-radius:12px;padding:14px 20px;font-size:14px;color:var(--text);font-family:var(--font);outline:none}
-.chat-input:focus{border-color:rgba(139,92,246,0.4)}.chat-input::placeholder{color:var(--dim)}
-.chat-send{background:linear-gradient(135deg,var(--accent),#7c3aed);border:none;color:#fff;padding:14px 24px;border-radius:12px;font-size:14px;font-weight:600;cursor:pointer;font-family:var(--font)}
 .settings-section{margin-bottom:32px}.settings-label{font-size:13px;color:var(--muted);margin-bottom:10px}
 .settings-input{width:100%;max-width:400px;background:var(--bg2);border:1px solid var(--border);border-radius:12px;padding:13px 18px;font-size:14px;color:var(--text);font-family:var(--font);outline:none}
 .modal-overlay{position:fixed;inset:0;background:rgba(0,0,0,0.6);z-index:100;display:flex;align-items:center;justify-content:center;backdrop-filter:blur(6px)}
@@ -123,8 +113,10 @@ body::before{content:'';position:fixed;inset:0;z-index:0;pointer-events:none;bac
 .modal-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:14px}
 .modal-field{display:flex;flex-direction:column;gap:4px}
 .modal-field label{font-size:11px;color:var(--muted);font-weight:600;letter-spacing:0.5px;text-transform:uppercase}
-.modal-field input{background:var(--bg);border:1px solid var(--border);border-radius:10px;padding:10px 14px;font-size:13px;color:var(--text);font-family:var(--mono);outline:none}
-.modal-field input:focus{border-color:rgba(139,92,246,0.4)}.modal-field input::placeholder{color:var(--dim)}
+.modal-field input,.modal-field select{background:var(--bg);border:1px solid var(--border);border-radius:10px;padding:10px 14px;font-size:13px;color:var(--text);font-family:var(--mono);outline:none}
+.modal-field input:focus,.modal-field select:focus{border-color:rgba(139,92,246,0.4)}
+.modal-field input::placeholder{color:var(--dim)}
+.modal-field select{cursor:pointer}
 .toast{position:fixed;bottom:24px;right:24px;background:var(--bg2);border:1px solid var(--green);border-radius:12px;padding:14px 22px;font-size:13px;color:var(--green);z-index:200;box-shadow:0 8px 30px rgba(0,0,0,0.4);animation:slideUp .3s ease,fadeOut .3s ease 2s forwards}
 .toast.error{border-color:var(--red);color:var(--red)}
 @keyframes slideUp{from{transform:translateY(20px);opacity:0}to{transform:translateY(0);opacity:1}}
@@ -133,17 +125,37 @@ body::before{content:'';position:fixed;inset:0;z-index:0;pointer-events:none;bac
 .fade-in{animation:fadeIn .3s ease forwards}
 .loading{text-align:center;padding:40px;color:var(--muted);font-size:14px}
 .main::-webkit-scrollbar{width:6px}.main::-webkit-scrollbar-track{background:transparent}.main::-webkit-scrollbar-thumb{background:var(--border-hi);border-radius:3px}
+
+.dash-grid{display:grid;grid-template-columns:1fr 1fr;gap:24px;margin-bottom:32px}
+.dash-card{background:var(--bg2);border:1px solid var(--border);border-radius:16px;padding:24px}
+.dash-card-title{font-size:14px;font-weight:600;margin-bottom:16px;color:var(--muted);display:flex;align-items:center;justify-content:space-between}
+.dash-stat-row{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-bottom:24px}
+.dash-stat{background:var(--bg2);border:1px solid var(--border);border-radius:14px;padding:20px;text-align:center}
+.dash-stat-val{font-size:28px;font-weight:800;font-family:var(--mono)}
+.dash-stat-label{font-size:11px;color:var(--muted);margin-top:6px;text-transform:uppercase;letter-spacing:1px}
+.note-card{background:var(--bg3);border:1px solid var(--border);border-radius:12px;padding:14px 18px;margin-bottom:10px;display:flex;align-items:flex-start;gap:12px}
+.note-text{flex:1;font-size:13px;line-height:1.5}
+.note-time{font-size:10px;color:var(--dim);white-space:nowrap;flex-shrink:0;margin-top:2px}
+.note-del{color:var(--dim);cursor:pointer;font-size:14px;transition:color .2s;flex-shrink:0;margin-top:1px}.note-del:hover{color:var(--red)}
+.note-input-row{display:flex;gap:10px;margin-top:12px}
+.note-input{flex:1;background:var(--bg);border:1px solid var(--border);border-radius:10px;padding:10px 16px;font-size:13px;color:var(--text);font-family:var(--font);outline:none}
+.note-input:focus{border-color:rgba(139,92,246,0.4)}
+.note-input::placeholder{color:var(--dim)}
+.note-send{background:var(--accent);border:none;color:#fff;padding:10px 18px;border-radius:10px;font-size:13px;font-weight:600;cursor:pointer;font-family:var(--font)}
+.recent-file{display:flex;align-items:center;gap:12px;padding:10px 14px;border-radius:10px;transition:background .2s;cursor:pointer}
+.recent-file:hover{background:var(--surface2)}
+.recent-file-name{font-size:13px;font-weight:600;flex:1;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.recent-file-meta{font-size:10px;color:var(--dim)}
 </style>
 </head>
 <body>
 <div class="sidebar">
     <div class="logo-area"><div class="logo-row"><div class="logo-icon">SH</div><div><div class="logo-text">Strategy Hub</div><div class="logo-sub">Trading Lab</div></div></div></div>
     <div class="nav">
-        <div id="nav-s" class="nav-item active" onclick="go('strategies')">Strategies <span class="nav-badge" id="badge-s">0</span></div>
+        <div id="nav-d" class="nav-item active" onclick="go('dashboard')">Dashboard</div>
+        <div id="nav-s" class="nav-item" onclick="go('strategies')">Backtesting <span class="nav-badge" id="badge-s">0</span></div>
         <div id="nav-v" class="nav-item" onclick="go('validated')">Validees <span class="nav-badge" id="badge-v">0</span></div>
-        <div id="nav-c" class="nav-item" onclick="go('chat')">Discussion</div>
         <div class="nav-sep"></div>
-        <div id="nav-a" class="nav-item" onclick="go('archives')">Archives</div>
         <div id="nav-p" class="nav-item" onclick="go('settings')">Parametres</div>
     </div>
     <div class="sidebar-footer"><div class="user-row"><div class="user-av">T</div><div><div class="user-name">Trader</div><div class="user-role">En ligne <span class="dot-online"></span></div></div></div></div>
@@ -154,6 +166,13 @@ body::before{content:'';position:fixed;inset:0;z-index:0;pointer-events:none;bac
 const SB_URL='https://fqlqqywybcnkknqfdfvp.supabase.co',SB_KEY='eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImZxbHFxeXd5YmNua2tucWZkZnZwIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzM5NDEwNzYsImV4cCI6MjA4OTUxNzA3Nn0.KtFW-x66KmSId3Gy0ITQ2Gwjohj76yCx6IHQAUkEqkA';
 const sb=supabase.createClient(SB_URL,SB_KEY);
 const svgUp=`<svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>`;
+
+// Section names stored in localStorage so they persist
+let sectionNames=JSON.parse(localStorage.getItem('sectionNames')||'{}');
+function getSecName(sid,sec){return(sectionNames[sid+'_'+sec])||(sec==='fondamentaux'?'Fondamentaux':sec==='rapports'?'Rapports backtest':'Fichiers annexes')}
+function setSecName(sid,sec,name){sectionNames[sid+'_'+sec]=name;localStorage.setItem('sectionNames',JSON.stringify(sectionNames))}
+
+// Notes stored in Supabase messages table (reuse)
 function toast(m,e){const t=document.createElement('div');t.className='toast'+(e?' error':'');t.innerHTML=m;document.body.appendChild(t);setTimeout(()=>t.remove(),2500)}
 function hideModal(){document.getElementById('modal-overlay').classList.add('hidden')}
 function setNav(id){document.querySelectorAll('.nav-item').forEach(n=>n.classList.remove('active'));if(id)document.getElementById(id).classList.add('active')}
@@ -162,12 +181,59 @@ function fmtSz(b){if(!b)return'';if(b<1024)return b+' B';if(b<1048576)return Mat
 function stCls(s){return'st-'+s.toLowerCase().replace(/ /g,'-')}
 function esc(s){return(s||'').replace(/\\/g,'\\\\').replace(/'/g,"\\'")}
 async function updateBadges(){const{count:sc}=await sb.from('strategies').select('*',{count:'exact',head:true});const{count:vc}=await sb.from('validated').select('*',{count:'exact',head:true});document.getElementById('badge-s').textContent=sc||0;document.getElementById('badge-v').textContent=vc||0}
-function go(v,d){hideModal();if(v==='strategies'){setNav('nav-s');renderStrategies()}else if(v==='detail'){setNav('nav-s');renderDetail(d)}else if(v==='fp'){setNav('nav-s');renderFP(d)}else if(v==='vp'){setNav('nav-v');renderVP(d)}else if(v==='validated'){setNav('nav-v');renderValidated()}else if(v==='chat'){setNav('nav-c');renderChat()}else if(v==='archives'){setNav('nav-a');renderArchives()}else if(v==='settings'){setNav('nav-p');renderSettings()}}
 
+function go(v,d){hideModal();
+if(v==='dashboard'){setNav('nav-d');renderDashboard()}
+else if(v==='strategies'){setNav('nav-s');renderStrategies()}
+else if(v==='detail'){setNav('nav-s');renderDetail(d)}
+else if(v==='fp'){setNav('nav-s');renderFP(d)}
+else if(v==='vp'){setNav('nav-v');renderVP(d)}
+else if(v==='validated'){setNav('nav-v');renderValidated()}
+else if(v==='settings'){setNav('nav-p');renderSettings()}}
+
+// ── DASHBOARD ──
+async function renderDashboard(){
+    document.getElementById('mc').innerHTML='<div class="loading">Chargement...</div>';
+    const{count:sc}=await sb.from('strategies').select('*',{count:'exact',head:true});
+    const{count:fc}=await sb.from('files').select('*',{count:'exact',head:true});
+    const{count:vc}=await sb.from('validated').select('*',{count:'exact',head:true});
+    const{data:recentFiles}=await sb.from('files').select('*').order('created_at',{ascending:false}).limit(6);
+    const{data:notes}=await sb.from('messages').select('*').order('id',{ascending:false}).limit(20);
+
+    let recentHtml=(recentFiles||[]).map(f=>`<div class="recent-file"><div class="file-dot ${dotCls(f.name)}"></div>
+        <div class="recent-file-name">${f.name}</div>
+        <div class="recent-file-meta">${new Date(f.created_at).toLocaleDateString('fr-FR')}</div></div>`).join('')||'<div style="color:var(--dim);font-size:13px;padding:12px">Aucun fichier</div>';
+
+    let notesHtml=(notes||[]).map(n=>`<div class="note-card"><div class="note-text">${n.content}</div>
+        <div class="note-time">${new Date(n.created_at).toLocaleDateString('fr-FR')}</div>
+        <div class="note-del" onclick="delNote(${n.id})">&#10005;</div></div>`).join('')||'<div style="color:var(--dim);font-size:13px;padding:12px">Aucune note</div>';
+
+    document.getElementById('mc').innerHTML=`
+        <div class="main-header fade-in"><div class="main-title">Dashboard</div></div>
+        <div class="dash-stat-row fade-in" style="animation-delay:.05s">
+            <div class="dash-stat"><div class="dash-stat-val" style="color:var(--accent)">${sc||0}</div><div class="dash-stat-label">Strategies</div></div>
+            <div class="dash-stat"><div class="dash-stat-val" style="color:var(--accent2)">${fc||0}</div><div class="dash-stat-label">Fichiers</div></div>
+            <div class="dash-stat"><div class="dash-stat-val" style="color:var(--green)">${vc||0}</div><div class="dash-stat-label">Validees</div></div>
+        </div>
+        <div class="dash-grid fade-in" style="animation-delay:.1s">
+            <div class="dash-card"><div class="dash-card-title">Derniers fichiers</div>${recentHtml}</div>
+            <div class="dash-card"><div class="dash-card-title">Notes</div>
+                <div id="notes-list">${notesHtml}</div>
+                <div class="note-input-row"><input class="note-input" placeholder="Ajouter une note..." id="note-inp" onkeydown="if(event.key==='Enter')addNote()">
+                <button class="note-send" onclick="addNote()">OK</button></div>
+            </div>
+        </div>`;
+    updateBadges()}
+
+async function addNote(){const inp=document.getElementById('note-inp');const t=inp.value.trim();if(!t)return;inp.value='';
+    await sb.from('messages').insert({author:'Note',content:t});renderDashboard()}
+async function delNote(id){await sb.from('messages').delete().eq('id',id);renderDashboard()}
+
+// ── STRATEGIES (BACKTESTING) ──
 async function renderStrategies(){document.getElementById('mc').innerHTML='<div class="loading">Chargement...</div>';
 const{data:st}=await sb.from('strategies').select('*').order('id');const{data:af}=await sb.from('files').select('strategy_id');
 const fc={};(af||[]).forEach(f=>{fc[f.strategy_id]=(fc[f.strategy_id]||0)+1});
-document.getElementById('mc').innerHTML=`<div class="main-header"><div class="main-title">Strategies</div><button class="btn btn-primary" onclick="showAdd()">+ Nouvelle strategie</button></div>
+document.getElementById('mc').innerHTML=`<div class="main-header"><div class="main-title">Backtesting</div><button class="btn btn-primary" onclick="showAdd()">+ Nouvelle strategie</button></div>
 <div class="folder-grid">${(st||[]).map((s,i)=>{const c=fc[s.id]||0;return`<div class="folder-card fade-in" style="animation-delay:${i*.04}s" onclick="go('detail',${s.id})">
 <div class="folder-top"><span class="folder-status ${stCls(s.status)}">${s.status}</span><div class="folder-actions" onclick="event.stopPropagation()">
 <div class="icon-btn" onclick="editS(${s.id},'${esc(s.name)}','${s.status}')">&#9998;</div><div class="icon-btn danger" onclick="delS(${s.id},'${esc(s.name)}')">&#10005;</div></div></div>
@@ -180,32 +246,53 @@ async function saveS(id){const n=document.getElementById('e-n').value.trim(),st=
 function delS(id,name){const o=document.getElementById('modal-overlay');o.classList.remove('hidden');o.innerHTML=`<div class="modal fade-in"><h3>Supprimer "${name}" ?</h3><p>Irreversible.</p><div class="modal-row"><button class="btn btn-ghost" onclick="hideModal()">Annuler</button><button class="btn btn-danger" onclick="confirmDelS(${id})">Supprimer</button></div></div>`}
 async function confirmDelS(id){const{data:fs}=await sb.from('files').select('file_path').eq('strategy_id',id);if(fs?.length)await sb.storage.from('files').remove(fs.map(f=>f.file_path));await sb.from('files').delete().eq('strategy_id',id);await sb.from('strategies').delete().eq('id',id);hideModal();renderStrategies()}
 
+// ── DETAIL (3 sections: annexes, fondamentaux, rapports) ──
 let curSid=null;
+const sections=['annexes','fondamentaux','rapports'];
+const defaultSecNames={annexes:'Fichiers annexes',fondamentaux:'Fondamentaux',rapports:'Rapports backtest'};
+
 async function renderDetail(id){curSid=id;document.getElementById('mc').innerHTML='<div class="loading">Chargement...</div>';
 const{data:s}=await sb.from('strategies').select('*').eq('id',id).single();if(!s){go('strategies');return}
 const{data:fs}=await sb.from('files').select('*').eq('strategy_id',id).order('id');
-const fond=(fs||[]).filter(f=>f.section==='fondamentaux'),rapp=(fs||[]).filter(f=>f.section==='rapports');
+
 function fl(arr,sec){if(!arr.length)return`<div class="empty-files">Aucun fichier</div>`;
 return`<div class="file-list">${arr.map((f,i)=>{const isH=f.name.endsWith('.html')||f.name.endsWith('.htm');
 return`<div class="file-row fade-in" style="animation-delay:${i*.03}s"><div class="file-dot ${dotCls(f.name)}"></div>
-<div class="file-info"><div class="file-name" onclick="event.stopPropagation();renameStart(${f.id},'${esc(f.name)}')" title="Renommer">${f.name}</div>
+<div class="file-info"><div class="file-name" onclick="event.stopPropagation();rnStart(${f.id},'${esc(f.name)}')" title="Renommer">${f.name}</div>
 <div class="file-meta">${fmtSz(f.size)} &middot; ${new Date(f.created_at).toLocaleDateString('fr-FR')}</div></div>
 <div class="file-actions">${isH?`<button class="file-preview-btn" onclick="event.stopPropagation();go('fp',{fid:${f.id},sid:${id},fn:'${esc(f.name)}',fp:'${f.file_path}',sn:'${esc(s.name)}'})">Voir</button>`:''}
 <button class="file-action-btn star" onclick="event.stopPropagation();starF(${f.id},'${esc(f.name)}','${f.file_path}',${f.size||0},'${esc(s.name)}','${sec}')">&#9733;</button>
 <button class="file-action-btn del" onclick="event.stopPropagation();delF(${f.id},'${f.file_path}',${id})">&#10005;</button></div></div>`}).join('')}</div>`}
+
 function ub(sec){return`<label class="upload-btn">${svgUp} Telecharger<input type="file" class="upload-input" multiple onchange="upF(${id},'${sec}',this.files);this.value=''"></label>`}
-document.getElementById('mc').innerHTML=`<div class="back-row fade-in"><div class="back-btn" onclick="go('strategies')"><span>&larr;</span> Retour</div><div class="breadcrumb"><span onclick="go('strategies')">Strategies</span><span class="bc-sep">&#9656;</span><span>${s.name}</span></div></div>
-<div class="main-header fade-in" style="animation-delay:.05s"><div class="main-title">${s.name}</div><span class="folder-status ${stCls(s.status)}" style="font-size:12px;padding:6px 16px">${s.status}</span></div>
-<div class="section-row fade-in" style="animation-delay:.08s"><div class="section-label">Fondamentaux</div>${ub('fondamentaux')}</div>${fl(fond,'fondamentaux')}
-<div class="section-row fade-in" style="animation-delay:.14s"><div class="section-label">Rapports backtest</div>${ub('rapports')}</div>${fl(rapp,'rapports')}`}
+
+function secLabel(sec){const name=getSecName(id,sec);
+return`<div class="section-label" onclick="editSecName(${id},'${sec}',this)" title="Cliquer pour renommer">${name}</div>`}
+
+let html=`<div class="back-row fade-in"><div class="back-btn" onclick="go('strategies')"><span>&larr;</span> Retour</div><div class="breadcrumb"><span onclick="go('strategies')">Backtesting</span><span class="bc-sep">&#9656;</span><span>${s.name}</span></div></div>
+<div class="main-header fade-in" style="animation-delay:.05s"><div class="main-title">${s.name}</div><span class="folder-status ${stCls(s.status)}" style="font-size:12px;padding:6px 16px">${s.status}</span></div>`;
+
+let delay=0.08;
+for(const sec of sections){
+    const arr=(fs||[]).filter(f=>f.section===sec);
+    html+=`<div class="section-row fade-in" style="animation-delay:${delay}s">${secLabel(sec)}${ub(sec)}</div>${fl(arr,sec)}`;
+    delay+=0.06}
+
+document.getElementById('mc').innerHTML=html}
+
+function editSecName(sid,sec,el){const cur=getSecName(sid,sec);
+el.outerHTML=`<input class="section-label-input" value="${cur}" onblur="saveSecName(${sid},'${sec}',this)" onkeydown="if(event.key==='Enter')this.blur()">`;
+const inp=document.querySelector('.section-label-input');if(inp){inp.focus();inp.select()}}
+function saveSecName(sid,sec,inp){const n=inp.value.trim();if(n)setSecName(sid,sec,n);renderDetail(sid)}
 
 async function upF(sid,sec,fl){for(const f of fl){const p=`${sid}/${sec}/${Date.now()}_${f.name}`;const{error}=await sb.storage.from('files').upload(p,f);if(error){toast('Erreur: '+error.message,true);continue}await sb.from('files').insert({strategy_id:sid,section:sec,name:f.name,file_path:p,size:f.size})}toast('&#10003; Upload OK');renderDetail(sid)}
 async function delF(fid,p,sid){await sb.storage.from('files').remove([p]);await sb.from('files').delete().eq('id',fid);renderDetail(sid)}
-function renameStart(fid,cur){const el=event.target;el.outerHTML=`<input class="file-name-input" value="${cur}" onblur="renameEnd(${fid},this)" onkeydown="if(event.key==='Enter')this.blur()">`;const inp=document.querySelector('.file-name-input');if(inp){inp.focus();inp.select()}}
-async function renameEnd(fid,inp){const n=inp.value.trim();if(n)await sb.from('files').update({name:n}).eq('id',fid);if(curSid)renderDetail(curSid)}
+function rnStart(fid,cur){const el=event.target;el.outerHTML=`<input class="file-name-input" value="${cur}" onblur="rnEnd(${fid},this)" onkeydown="if(event.key==='Enter')this.blur()">`;const inp=document.querySelector('.file-name-input');if(inp){inp.focus();inp.select()}}
+async function rnEnd(fid,inp){const n=inp.value.trim();if(n)await sb.from('files').update({name:n}).eq('id',fid);if(curSid)renderDetail(curSid)}
 
-function starF(fid,name,path,size,sn,sec){if(sec==='rapports'){showValModal(fid,name,path,size,sn)}else{simpleStar(name,path,size,sn)}}
-async function simpleStar(name,path,size,sn){await sb.from('validated').insert({name,file_path:path,size,origin_strategy:sn,origin_section:'Fondamentaux'});updateBadges();toast('&#9733; <b>'+name+'</b> dans Validees')}
+// ── STAR / VALIDATE ──
+function starF(fid,name,path,size,sn,sec){if(sec==='rapports'){showValModal(fid,name,path,size,sn)}else{simpleStar(name,path,size,sn,sec)}}
+async function simpleStar(name,path,size,sn,sec){await sb.from('validated').insert({name,file_path:path,size,origin_strategy:sn,origin_section:getSecName(0,sec)});updateBadges();toast('&#9733; <b>'+name+'</b> dans Validees')}
 
 function showValModal(fid,name,path,size,sn){const o=document.getElementById('modal-overlay');o.classList.remove('hidden');
 o.innerHTML=`<div class="modal fade-in"><h3>&#9733; Valider une configuration</h3><p>Parametres de la config choisie dans <b>${name}</b></p>
@@ -214,8 +301,11 @@ o.innerHTML=`<div class="modal fade-in"><h3>&#9733; Valider une configuration</h
 <div class="modal-field"><label>Config #</label><input id="v-cfg" placeholder="3"></div>
 <div class="modal-field"><label>TP (pts)</label><input id="v-tp" placeholder="175"></div>
 <div class="modal-field"><label>SL (pts)</label><input id="v-sl" placeholder="195"></div>
-<div class="modal-field"><label>BE Trigger</label><input id="v-be" placeholder="80%"></div>
+<div class="modal-field"><label>BE (%)</label><input id="v-be" placeholder="80%"></div>
 <div class="modal-field"><label>Buffer</label><input id="v-buf" placeholder="45"></div>
+<div class="modal-field"><label>Avec BE</label><select id="v-withbe"><option value="Oui">Oui</option><option value="Non">Non</option></select></div>
+<div class="modal-field"><label>SL max autorise</label><input id="v-slmax" placeholder="3"></div>
+<div class="modal-field"><label>Stop au 1er TP</label><select id="v-stoptp"><option value="Oui">Oui</option><option value="Non">Non</option></select></div>
 <div class="modal-field"><label>PnL</label><input id="v-pnl" placeholder="+34,400 €"></div>
 <div class="modal-field"><label>Max DD</label><input id="v-dd" placeholder="-3,240 €"></div>
 <div class="modal-field"><label>Win Rate</label><input id="v-wr" placeholder="66.7%"></div>
@@ -228,20 +318,27 @@ o.innerHTML=`<div class="modal fade-in"><h3>&#9733; Valider une configuration</h
 setTimeout(()=>document.getElementById('v-cfg')?.focus(),50)}
 
 async function submitVal(fn,path,size,sn){const name=document.getElementById('v-name').value.trim()||sn;
+const withBe=document.getElementById('v-withbe').value;
+const stopTp=document.getElementById('v-stoptp').value;
+const beVal=document.getElementById('v-be').value.trim()+(withBe==='Non'?' (desactive)':'');
+const bufVal=document.getElementById('v-buf').value.trim();
+const slMaxVal=document.getElementById('v-slmax').value.trim();
 await sb.from('validated').insert({name,file_path:path,size,origin_strategy:sn,origin_section:'Rapports backtest',
 config_number:document.getElementById('v-cfg').value.trim(),tp:document.getElementById('v-tp').value.trim(),
-sl:document.getElementById('v-sl').value.trim(),be_trigger:document.getElementById('v-be').value.trim(),
-buffer:document.getElementById('v-buf').value.trim(),pnl:document.getElementById('v-pnl').value.trim(),
-max_dd:document.getElementById('v-dd').value.trim(),win_rate:document.getElementById('v-wr').value.trim(),
-profit_factor:document.getElementById('v-pf').value.trim(),calmar:document.getElementById('v-cal').value.trim(),
-trades:document.getElementById('v-tr').value.trim(),sharpe:document.getElementById('v-sh').value.trim()});
+sl:document.getElementById('v-sl').value.trim()+(slMaxVal?' (max:'+slMaxVal+')':''),
+be_trigger:beVal,buffer:bufVal,
+pnl:document.getElementById('v-pnl').value.trim(),max_dd:document.getElementById('v-dd').value.trim(),
+win_rate:document.getElementById('v-wr').value.trim(),profit_factor:document.getElementById('v-pf').value.trim(),
+calmar:document.getElementById('v-cal').value.trim(),trades:document.getElementById('v-tr').value.trim(),
+sharpe:document.getElementById('v-sh').value.trim()});
 updateBadges();hideModal();toast('&#9733; <b>'+name+'</b> valide !')}
 
-async function renderFP(d){document.getElementById('mc').innerHTML='<div class="loading">Chargement du fichier...</div>';
+// ── FILE PREVIEW ──
+async function renderFP(d){document.getElementById('mc').innerHTML='<div class="loading">Chargement...</div>';
 const url=sb.storage.from('files').getPublicUrl(d.fp).data.publicUrl;let html='';
-try{const r=await fetch(url);html=await r.text()}catch(e){html='<p>Erreur de chargement</p>'}
+try{const r=await fetch(url);html=await r.text()}catch(e){html='<p>Erreur</p>'}
 document.getElementById('mc').innerHTML=`<div class="back-row fade-in"><div class="back-btn" onclick="go('detail',${d.sid})"><span>&larr;</span> Retour</div>
-<div class="breadcrumb"><span onclick="go('strategies')">Strategies</span><span class="bc-sep">&#9656;</span><span onclick="go('detail',${d.sid})">${d.sn}</span><span class="bc-sep">&#9656;</span><span>${d.fn}</span></div></div>
+<div class="breadcrumb"><span onclick="go('strategies')">Backtesting</span><span class="bc-sep">&#9656;</span><span onclick="go('detail',${d.sid})">${d.sn}</span><span class="bc-sep">&#9656;</span><span>${d.fn}</span></div></div>
 <div class="main-title fade-in" style="margin-bottom:24px">${d.fn}</div>
 <div class="preview-frame fade-in" style="animation-delay:.1s"><div class="preview-bar"><span class="preview-bar-name">${d.fn}</span>
 <div class="preview-actions"><button class="p-btn" onclick="openFS('pvi')">Plein ecran</button><a class="p-btn" href="${url}" target="_blank">Nouvel onglet</a></div></div>
@@ -249,11 +346,11 @@ document.getElementById('mc').innerHTML=`<div class="back-row fade-in"><div clas
 setTimeout(()=>{const f=document.getElementById('pvi');if(f){const d2=f.contentDocument||f.contentWindow.document;d2.open();d2.write(html);d2.close()}},150)}
 function openFS(id){const e=document.getElementById(id);if(e.requestFullscreen)e.requestFullscreen();else if(e.webkitRequestFullscreen)e.webkitRequestFullscreen()}
 
+// ── VALIDATED ──
 async function renderValidated(){document.getElementById('mc').innerHTML='<div class="loading">Chargement...</div>';
 const{data:vs}=await sb.from('validated').select('*').order('id',{ascending:false});
 if(!vs?.length){document.getElementById('mc').innerHTML=`<div class="main-header fade-in"><div class="main-title">Validees</div></div>
-<div class="empty-state fade-in" style="animation-delay:.05s"><div style="font-size:48px;opacity:0.3;margin-bottom:16px">&#9733;</div>
-<p>Aucune config validee.<br>Cliquez l'etoile d'un rapport backtest pour valider une config.</p></div>`;return}
+<div class="empty-state fade-in"><div style="font-size:48px;opacity:0.3;margin-bottom:16px">&#9733;</div><p>Aucune config validee.<br>Cliquez l'etoile d'un rapport backtest.</p></div>`;return}
 document.getElementById('mc').innerHTML=`<div class="main-header fade-in"><div class="main-title">Validees</div></div>
 ${vs.map((v,i)=>{const hp=v.tp||v.sl||v.pnl;const isH=(v.file_path||'').includes('.htm');
 let kpis='',params='';
@@ -277,22 +374,12 @@ document.getElementById('mc').innerHTML=`<div class="back-row fade-in"><div clas
 <iframe id="pvi" class="preview-iframe"></iframe></div>`;
 setTimeout(()=>{const f=document.getElementById('pvi');if(f){const d2=f.contentDocument||f.contentWindow.document;d2.open();d2.write(html);d2.close()}},150)}
 
-async function renderChat(){document.getElementById('mc').innerHTML='<div class="loading">Chargement...</div>';
-const{data:ms}=await sb.from('messages').select('*').order('id');
-document.getElementById('mc').innerHTML=`<div class="main-header fade-in"><div class="main-title">Discussion</div></div>
-<div class="chat-area" id="ca">${(ms||[]).map((m,i)=>{const t=m.author==='Trader',tm=new Date(m.created_at).toLocaleTimeString('fr-FR',{hour:'2-digit',minute:'2-digit'});
-return`<div class="chat-msg ${t?'me':''} fade-in" style="animation-delay:${i*.03}s"><div class="chat-av ${t?'av-t':'av-d'}">${t?'T':'D'}</div>
-<div class="chat-body"><div class="chat-name">${m.author} <span class="time">${tm}</span></div><div class="chat-bubble">${m.content}</div></div></div>`}).join('')}</div>
-<div class="chat-input-row fade-in"><input class="chat-input" placeholder="Ecrire un message..." id="ci" onkeydown="if(event.key==='Enter')sendM()"><button class="chat-send" onclick="sendM()">Envoyer</button></div>`;
-const a=document.getElementById('ca');if(a)a.scrollTop=a.scrollHeight}
-async function sendM(){const inp=document.getElementById('ci'),t=inp.value.trim();if(!t)return;inp.value='';await sb.from('messages').insert({author:'Trader',content:t});renderChat()}
-
-function renderArchives(){document.getElementById('mc').innerHTML=`<div class="main-header fade-in"><div class="main-title">Archives</div></div><div class="empty-state fade-in"><div style="font-size:48px;opacity:0.3;margin-bottom:16px">&#9776;</div><p>Aucune strategie archivee.</p></div>`}
-function renderSettings(){document.getElementById('mc').innerHTML=`<div class="main-header fade-in"><div class="main-title">Parametres</div></div><div class="fade-in" style="animation-delay:.05s"><div class="settings-section"><div class="section-label" style="margin-bottom:16px">Profil</div><div class="settings-label">Nom</div><input class="settings-input" value="Trader"><div class="settings-label" style="margin-top:16px">Role</div><input class="settings-input" value="Trader"></div><div class="settings-section"><div class="section-label" style="margin-bottom:16px">Apparence</div><div style="display:flex;gap:10px"><button class="btn btn-ghost" style="opacity:0.5;pointer-events:none">Clair</button><button class="btn btn-primary" style="pointer-events:none">Sombre</button></div></div></div>`}
+// ── SETTINGS ──
+function renderSettings(){document.getElementById('mc').innerHTML=`<div class="main-header fade-in"><div class="main-title">Parametres</div></div><div class="fade-in" style="animation-delay:.05s"><div class="settings-section"><div class="section-label" style="margin-bottom:16px;cursor:default;border:none">Profil</div><div class="settings-label">Nom</div><input class="settings-input" value="Trader"><div class="settings-label" style="margin-top:16px">Role</div><input class="settings-input" value="Trader"></div><div class="settings-section"><div class="section-label" style="margin-bottom:16px;cursor:default;border:none">Apparence</div><div style="display:flex;gap:10px"><button class="btn btn-ghost" style="opacity:0.5;pointer-events:none">Clair</button><button class="btn btn-primary" style="pointer-events:none">Sombre</button></div></div></div>`}
 
 document.getElementById('modal-overlay').addEventListener('click',function(e){if(e.target===this)hideModal()});
 document.addEventListener('keydown',function(e){if(e.key==='Escape')hideModal()});
-go('strategies');
+go('dashboard');
 </script>
 </body>
 </html>
