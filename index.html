@@ -1,0 +1,505 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Strategy Hub — Trading Lab</title>
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{--bg:#07090e;--bg2:#0c1019;--bg3:#111827;--surface:rgba(255,255,255,0.03);--surface2:rgba(255,255,255,0.06);--border:rgba(255,255,255,0.07);--border-hi:rgba(255,255,255,0.14);--text:#eef2ff;--muted:#6b7a99;--dim:#3d4a63;--accent:#8b5cf6;--accent2:#06b6d4;--green:#22c55e;--red:#ef4444;--amber:#f59e0b;--font:'Outfit',sans-serif;--mono:'JetBrains Mono',monospace}
+html,body{height:100%;overflow:hidden}
+body{font-family:var(--font);background:var(--bg);color:var(--text);display:flex}
+body::before{content:'';position:fixed;inset:0;z-index:0;pointer-events:none;background:radial-gradient(ellipse 70% 50% at 5% 0%,rgba(139,92,246,0.08),transparent),radial-gradient(ellipse 50% 40% at 95% 100%,rgba(6,182,212,0.06),transparent)}
+.sidebar{width:240px;min-width:240px;background:rgba(12,16,25,0.9);backdrop-filter:blur(20px);border-right:1px solid var(--border);display:flex;flex-direction:column;position:relative;z-index:2}
+.logo-area{padding:28px 24px 24px;border-bottom:1px solid var(--border)}
+.logo-row{display:flex;align-items:center;gap:12px}
+.logo-icon{width:38px;height:38px;border-radius:10px;background:linear-gradient(135deg,var(--accent),var(--accent2));display:flex;align-items:center;justify-content:center;font-size:14px;font-weight:800;color:#fff}
+.logo-text{font-size:16px;font-weight:700;letter-spacing:-0.3px}
+.logo-sub{font-size:9px;color:var(--muted);margin-top:3px;letter-spacing:3px;text-transform:uppercase}
+.nav{flex:1;padding:20px 12px}
+.nav-item{display:flex;align-items:center;gap:12px;padding:12px 16px;font-size:14px;color:var(--muted);cursor:pointer;border-radius:12px;transition:all .2s;margin-bottom:4px;position:relative}
+.nav-item:hover{background:var(--surface2);color:var(--text)}
+.nav-item.active{background:linear-gradient(135deg,rgba(139,92,246,0.12),rgba(6,182,212,0.08));color:var(--text);font-weight:500}
+.nav-item.active::before{content:'';position:absolute;left:0;top:50%;transform:translateY(-50%);width:3px;height:22px;border-radius:0 4px 4px 0;background:linear-gradient(180deg,var(--accent),var(--accent2))}
+.nav-badge{margin-left:auto;font-size:11px;padding:3px 9px;border-radius:99px;font-weight:600;font-family:var(--mono);background:var(--surface2);color:var(--muted)}
+.nav-item.active .nav-badge{background:rgba(139,92,246,0.2);color:#a78bfa}
+.nav-sep{height:1px;background:var(--border);margin:16px 16px}
+.sidebar-footer{padding:18px 24px;border-top:1px solid var(--border)}
+.user-row{display:flex;align-items:center;gap:12px}
+.user-av{width:34px;height:34px;border-radius:50%;background:linear-gradient(135deg,var(--accent),var(--accent2));display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:700;color:#fff}
+.user-name{font-size:13px;font-weight:500}
+.user-role{font-size:11px;color:var(--muted);display:flex;align-items:center;gap:6px}
+.dot-online{width:7px;height:7px;border-radius:50%;background:var(--green);animation:pulse 2s infinite}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:.4}}
+.main{flex:1;padding:36px 44px;overflow-y:auto;position:relative;z-index:1}
+.main-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:32px;flex-wrap:wrap;gap:16px}
+.main-title{font-size:26px;font-weight:800;letter-spacing:-0.5px}
+.back-row{display:flex;align-items:center;gap:14px;margin-bottom:24px}
+.back-btn{display:flex;align-items:center;gap:8px;font-size:13px;color:var(--muted);cursor:pointer;padding:8px 16px;border-radius:10px;background:var(--surface2);border:1px solid var(--border);font-family:var(--font);transition:all .2s}
+.back-btn:hover{color:var(--text);border-color:var(--border-hi)}
+.breadcrumb{font-size:12px;color:var(--muted);display:flex;align-items:center;gap:8px}
+.breadcrumb span{cursor:pointer;transition:color .2s}.breadcrumb span:hover{color:var(--text)}
+.bc-sep{color:var(--dim);font-size:10px}
+.btn{display:inline-flex;align-items:center;gap:8px;padding:10px 22px;border-radius:12px;font-size:13px;font-weight:600;cursor:pointer;font-family:var(--font);transition:all .2s;border:none;white-space:nowrap}
+.btn-primary{background:linear-gradient(135deg,var(--accent),#7c3aed);color:#fff;box-shadow:0 4px 20px rgba(139,92,246,0.25)}
+.btn-primary:hover{transform:translateY(-1px);box-shadow:0 6px 25px rgba(139,92,246,0.35)}
+.btn-ghost{background:var(--surface2);color:var(--muted);border:1px solid var(--border)}
+.btn-ghost:hover{color:var(--text);border-color:var(--border-hi)}
+.btn-danger{background:rgba(239,68,68,0.1);color:var(--red);border:1px solid rgba(239,68,68,0.15)}
+.btn-danger:hover{background:rgba(239,68,68,0.18)}
+.folder-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:20px}
+.folder-card{background:var(--bg2);border:1px solid var(--border);border-radius:16px;padding:28px;cursor:pointer;transition:all .3s;position:relative;overflow:hidden}
+.folder-card::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,var(--accent),var(--accent2));opacity:0;transition:opacity .3s}
+.folder-card:hover{border-color:var(--border-hi);transform:translateY(-3px);box-shadow:0 12px 40px rgba(0,0,0,0.3)}
+.folder-card:hover::before{opacity:1}
+.folder-top{display:flex;align-items:center;justify-content:space-between;margin-bottom:18px}
+.folder-status{font-size:11px;font-weight:600;letter-spacing:0.8px;text-transform:uppercase;padding:5px 14px;border-radius:8px}
+.st-en-test{background:rgba(245,158,11,0.12);color:var(--amber)}.st-validee{background:rgba(34,197,94,0.12);color:var(--green)}.st-en-prod{background:rgba(139,92,246,0.12);color:#a78bfa}
+.folder-actions{display:flex;gap:8px}
+.icon-btn{width:32px;height:32px;border-radius:8px;background:var(--surface2);border:1px solid var(--border);color:var(--muted);display:flex;align-items:center;justify-content:center;cursor:pointer;font-size:14px;transition:all .15s}
+.icon-btn:hover{color:var(--text);border-color:var(--border-hi)}
+.icon-btn.danger:hover{color:var(--red);border-color:rgba(239,68,68,0.3);background:rgba(239,68,68,0.08)}
+.folder-name{font-size:20px;font-weight:700;letter-spacing:-0.3px}
+.folder-meta{font-size:13px;color:var(--muted);margin-top:8px}
+.section-row{display:flex;align-items:center;justify-content:space-between;margin:36px 0 18px}
+.section-label{font-size:11px;font-weight:600;letter-spacing:3px;text-transform:uppercase;color:var(--dim);display:flex;align-items:center;gap:14px}
+.section-label::after{content:'';width:60px;height:1px;background:var(--border)}
+.upload-btn{display:flex;align-items:center;gap:6px;font-size:12px;color:var(--accent2);cursor:pointer;padding:7px 16px;border-radius:10px;background:rgba(6,182,212,0.08);border:1px solid rgba(6,182,212,0.15);font-family:var(--font);transition:all .2s;white-space:nowrap}
+.upload-btn:hover{background:rgba(6,182,212,0.15);color:#22d3ee}
+.upload-btn svg{width:14px;height:14px;stroke:currentColor;fill:none;stroke-width:2}
+.upload-input{display:none}
+.file-list{display:flex;flex-direction:column;gap:8px}
+.file-row{display:flex;align-items:center;gap:14px;padding:14px 18px;background:var(--bg2);border:1px solid var(--border);border-radius:12px;transition:all .2s}
+.file-row:hover{border-color:var(--border-hi)}
+.file-dot{width:10px;height:10px;border-radius:50%;flex-shrink:0}
+.file-dot.html{background:var(--accent2)}.file-dot.pdf{background:var(--red)}.file-dot.img{background:var(--green)}.file-dot.other{background:var(--muted)}
+.file-info{flex:1;min-width:0}
+.file-name{font-size:14px;font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;cursor:pointer;padding:2px 6px;margin:-2px -6px;border-radius:6px;border:1px solid transparent;transition:all .2s}
+.file-name:hover{border-color:var(--border);background:rgba(255,255,255,0.02)}
+.file-name-input{font-size:14px;font-weight:600;background:var(--bg);border:1px solid rgba(139,92,246,0.4);border-radius:6px;padding:4px 8px;color:var(--text);font-family:var(--font);outline:none;width:100%}
+.file-meta{font-size:11px;color:var(--muted);margin-top:3px}
+.file-actions{display:flex;gap:6px;align-items:center;flex-shrink:0}
+.file-action-btn{width:32px;height:32px;border-radius:8px;background:transparent;border:1px solid transparent;color:var(--dim);display:flex;align-items:center;justify-content:center;cursor:pointer;font-size:15px;transition:all .15s}
+.file-action-btn:hover{border-color:var(--border);background:var(--surface2);color:var(--text)}
+.file-action-btn.star:hover{color:var(--amber);border-color:rgba(245,158,11,0.3);background:rgba(245,158,11,0.06)}
+.file-action-btn.del:hover{color:var(--red);border-color:rgba(239,68,68,0.3);background:rgba(239,68,68,0.06)}
+.file-preview-btn{font-size:12px;color:var(--accent2);cursor:pointer;padding:6px 14px;border-radius:8px;background:rgba(6,182,212,0.08);border:1px solid rgba(6,182,212,0.15);font-family:var(--font);transition:all .2s;white-space:nowrap}
+.file-preview-btn:hover{background:rgba(6,182,212,0.15)}
+.preview-frame{margin-top:24px;border-radius:16px;overflow:hidden;border:1px solid var(--border);background:#060b14}
+.preview-bar{background:rgba(255,255,255,0.04);padding:14px 22px;display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid var(--border)}
+.preview-bar-name{font-size:13px;color:var(--muted);font-family:var(--mono)}
+.preview-actions{display:flex;gap:8px}
+.p-btn{font-size:12px;color:var(--muted);cursor:pointer;padding:7px 16px;border-radius:8px;background:var(--surface2);border:1px solid var(--border);font-family:var(--font);transition:all .2s}
+.p-btn:hover{color:var(--text);border-color:var(--border-hi)}
+.preview-iframe{width:100%;min-height:600px;border:none;background:#fff}
+.empty-state{text-align:center;padding:60px 24px;color:var(--dim)}
+.empty-state p{font-size:14px;margin-top:12px;color:var(--muted);line-height:1.6}
+.empty-files{text-align:center;padding:28px;color:var(--dim);font-size:13px;border:1px dashed var(--border);border-radius:12px}
+.val-card{background:var(--bg2);border:1px solid var(--border);border-radius:16px;padding:24px;margin-bottom:16px;position:relative;overflow:hidden}
+.val-card::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,var(--green),var(--accent2))}
+.val-header{display:flex;align-items:center;justify-content:space-between;gap:12px}
+.val-name{font-size:16px;font-weight:700;letter-spacing:-0.2px;cursor:pointer;padding:2px 6px;margin:-2px -6px;border-radius:6px;border:1px solid transparent;transition:all .2s}
+.val-name:hover{border-color:var(--border);background:rgba(255,255,255,0.02)}
+.val-origin{font-size:12px;color:var(--muted);margin-top:6px}
+.val-actions{display:flex;gap:6px;flex-shrink:0}
+.chat-area{display:flex;flex-direction:column;gap:22px}
+.chat-msg{display:flex;gap:14px;align-items:flex-start}
+.chat-av{width:36px;height:36px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:700;flex-shrink:0;color:#fff}
+.av-t{background:linear-gradient(135deg,var(--accent),#7c3aed)}.av-d{background:linear-gradient(135deg,var(--accent2),#0891b2)}
+.chat-body{flex:1}
+.chat-name{font-size:12px;font-weight:600;margin-bottom:8px;display:flex;align-items:center;gap:10px}
+.chat-name .time{font-weight:400;color:var(--dim);font-size:11px}
+.chat-bubble{background:var(--bg2);border:1px solid var(--border);border-radius:4px 16px 16px 16px;padding:16px 20px;font-size:14px;line-height:1.6;max-width:80%}
+.chat-msg.me .chat-bubble{background:rgba(139,92,246,0.08);border-color:rgba(139,92,246,0.15);border-radius:16px 4px 16px 16px}
+.chat-input-row{display:flex;gap:12px;margin-top:24px;padding-top:24px;border-top:1px solid var(--border)}
+.chat-input{flex:1;background:var(--bg2);border:1px solid var(--border);border-radius:12px;padding:14px 20px;font-size:14px;color:var(--text);font-family:var(--font);outline:none}
+.chat-input:focus{border-color:rgba(139,92,246,0.4)}
+.chat-input::placeholder{color:var(--dim)}
+.chat-send{background:linear-gradient(135deg,var(--accent),#7c3aed);border:none;color:#fff;padding:14px 24px;border-radius:12px;font-size:14px;font-weight:600;cursor:pointer;font-family:var(--font)}
+.settings-section{margin-bottom:32px}
+.settings-label{font-size:13px;color:var(--muted);margin-bottom:10px}
+.settings-input{width:100%;max-width:400px;background:var(--bg2);border:1px solid var(--border);border-radius:12px;padding:13px 18px;font-size:14px;color:var(--text);font-family:var(--font);outline:none}
+.settings-input:focus{border-color:rgba(139,92,246,0.4)}
+.modal-overlay{position:fixed;inset:0;background:rgba(0,0,0,0.6);z-index:100;display:flex;align-items:center;justify-content:center;backdrop-filter:blur(6px)}
+.modal-overlay.hidden{display:none}
+.modal{background:var(--bg2);border:1px solid var(--border);border-radius:20px;padding:32px;width:420px;max-width:92%;box-shadow:0 25px 60px rgba(0,0,0,0.4)}
+.modal h3{font-size:18px;font-weight:700;margin-bottom:10px}
+.modal p{font-size:13px;color:var(--muted);margin-bottom:24px;line-height:1.6}
+.modal-input{width:100%;background:var(--bg);border:1px solid var(--border);border-radius:12px;padding:13px 18px;font-size:14px;color:var(--text);font-family:var(--font);outline:none;margin-bottom:14px}
+.modal-input:focus{border-color:rgba(139,92,246,0.4)}
+.modal-input::placeholder{color:var(--dim)}
+.modal-row{display:flex;gap:10px;justify-content:flex-end;margin-top:12px}
+.toast{position:fixed;bottom:24px;right:24px;background:var(--bg2);border:1px solid var(--green);border-radius:12px;padding:14px 22px;font-size:13px;color:var(--green);z-index:200;box-shadow:0 8px 30px rgba(0,0,0,0.4);display:flex;align-items:center;gap:10px;animation:slideUp .3s ease,fadeOut .3s ease 2s forwards}
+.toast.error{border-color:var(--red);color:var(--red)}
+@keyframes slideUp{from{transform:translateY(20px);opacity:0}to{transform:translateY(0);opacity:1}}
+@keyframes fadeOut{to{opacity:0;transform:translateY(10px)}}
+@keyframes fadeIn{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
+.fade-in{animation:fadeIn .3s ease forwards}
+.loading{text-align:center;padding:40px;color:var(--muted);font-size:14px}
+.main::-webkit-scrollbar{width:6px}.main::-webkit-scrollbar-track{background:transparent}.main::-webkit-scrollbar-thumb{background:var(--border-hi);border-radius:3px}
+</style>
+</head>
+<body>
+<div class="sidebar">
+    <div class="logo-area"><div class="logo-row"><div class="logo-icon">SH</div><div><div class="logo-text">Strategy Hub</div><div class="logo-sub">Trading Lab</div></div></div></div>
+    <div class="nav">
+        <div id="nav-s" class="nav-item active" onclick="go('strategies')">Strategies <span class="nav-badge" id="badge-s">0</span></div>
+        <div id="nav-v" class="nav-item" onclick="go('validated')">Validees <span class="nav-badge" id="badge-v">0</span></div>
+        <div id="nav-c" class="nav-item" onclick="go('chat')">Discussion</div>
+        <div class="nav-sep"></div>
+        <div id="nav-a" class="nav-item" onclick="go('archives')">Archives</div>
+        <div id="nav-p" class="nav-item" onclick="go('settings')">Parametres</div>
+    </div>
+    <div class="sidebar-footer"><div class="user-row"><div class="user-av">T</div><div><div class="user-name">Trader</div><div class="user-role">En ligne <span class="dot-online"></span></div></div></div></div>
+</div>
+<div class="main" id="mc"></div>
+<div class="modal-overlay hidden" id="modal-overlay"></div>
+
+<script>
+// ── SUPABASE CONFIG ──
+const SUPABASE_URL = 'https://fqlqqywybcnkknqfdfvp.supabase.co';
+const SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImZxbHFxeXd5YmNua2tucWZkZnZwIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzM5NDEwNzYsImV4cCI6MjA4OTUxNzA3Nn0.KtFW-x66KmSId3Gy0ITQ2Gwjohj76yCx6IHQAUkEqkA';
+const sb = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+
+function toast(msg, err) {
+    const t = document.createElement('div');
+    t.className = 'toast' + (err ? ' error' : '');
+    t.innerHTML = msg;
+    document.body.appendChild(t);
+    setTimeout(() => t.remove(), 2500);
+}
+function hideModal() { document.getElementById('modal-overlay').classList.add('hidden'); }
+function setActiveNav(id) { document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active')); if (id) document.getElementById(id).classList.add('active'); }
+function getFileDotClass(n) { const e = n.split('.').pop().toLowerCase(); if (e === 'html' || e === 'htm') return 'html'; if (e === 'pdf') return 'pdf'; if (['png','jpg','jpeg','gif','webp','svg'].includes(e)) return 'img'; return 'other'; }
+function formatSize(b) { if (!b) return ''; if (b < 1024) return b + ' B'; if (b < 1048576) return Math.round(b / 1024) + ' KB'; return (b / 1048576).toFixed(1) + ' MB'; }
+function statusClass(s) { return 'st-' + s.toLowerCase().replace(/ /g, '-'); }
+const svgUp = `<svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>`;
+
+async function updateBadges() {
+    const { count: sc } = await sb.from('strategies').select('*', { count: 'exact', head: true });
+    const { count: vc } = await sb.from('validated').select('*', { count: 'exact', head: true });
+    document.getElementById('badge-s').textContent = sc || 0;
+    document.getElementById('badge-v').textContent = vc || 0;
+}
+
+function go(view, data) {
+    hideModal();
+    if (view === 'strategies') { setActiveNav('nav-s'); renderStrategies(); }
+    else if (view === 'detail') { setActiveNav('nav-s'); renderDetail(data); }
+    else if (view === 'file-preview') { setActiveNav('nav-s'); renderFilePreview(data); }
+    else if (view === 'val-preview') { setActiveNav('nav-v'); renderValPreview(data); }
+    else if (view === 'validated') { setActiveNav('nav-v'); renderValidated(); }
+    else if (view === 'chat') { setActiveNav('nav-c'); renderChat(); }
+    else if (view === 'archives') { setActiveNav('nav-a'); renderArchives(); }
+    else if (view === 'settings') { setActiveNav('nav-p'); renderSettings(); }
+}
+
+// ── STRATEGIES ──
+async function renderStrategies() {
+    document.getElementById('mc').innerHTML = '<div class="loading">Chargement...</div>';
+    const { data: strats } = await sb.from('strategies').select('*').order('id');
+    const { data: allFiles } = await sb.from('files').select('strategy_id');
+    const fileCounts = {};
+    (allFiles || []).forEach(f => { fileCounts[f.strategy_id] = (fileCounts[f.strategy_id] || 0) + 1; });
+
+    let cards = (strats || []).map((s, i) => {
+        const count = fileCounts[s.id] || 0;
+        return `<div class="folder-card fade-in" style="animation-delay:${i * 0.04}s" onclick="go('detail',${s.id})">
+            <div class="folder-top">
+                <span class="folder-status ${statusClass(s.status)}">${s.status}</span>
+                <div class="folder-actions" onclick="event.stopPropagation()">
+                    <div class="icon-btn" onclick="editStrategy(${s.id},'${s.name.replace(/'/g,"\\'")}','${s.status}')" title="Modifier">&#9998;</div>
+                    <div class="icon-btn danger" onclick="deleteStrategy(${s.id},'${s.name.replace(/'/g,"\\'")}')">&#10005;</div>
+                </div>
+            </div>
+            <div class="folder-name">${s.name}</div>
+            ${count > 0 ? `<div class="folder-meta">${count} fichier${count > 1 ? 's' : ''}</div>` : `<div class="folder-meta" style="color:var(--dim)">Aucun fichier</div>`}
+        </div>`;
+    }).join('');
+
+    document.getElementById('mc').innerHTML = `
+        <div class="main-header"><div class="main-title">Strategies</div>
+        <button class="btn btn-primary" onclick="showAddModal()">+ Nouvelle strategie</button></div>
+        <div class="folder-grid">${cards}</div>`;
+    updateBadges();
+}
+
+function showAddModal() {
+    const ov = document.getElementById('modal-overlay'); ov.classList.remove('hidden');
+    ov.innerHTML = `<div class="modal fade-in"><h3>Nouvelle strategie</h3>
+        <input class="modal-input" id="m-name" placeholder="Nom de la strategie" autofocus>
+        <div class="modal-row"><button class="btn btn-ghost" onclick="hideModal()">Annuler</button>
+        <button class="btn btn-primary" onclick="addStrategy()">Ajouter</button></div></div>`;
+    setTimeout(() => document.getElementById('m-name')?.focus(), 50);
+}
+
+async function addStrategy() {
+    const n = document.getElementById('m-name').value.trim(); if (!n) return;
+    await sb.from('strategies').insert({ name: n, status: 'En test' });
+    hideModal(); renderStrategies();
+}
+
+function editStrategy(id, name, status) {
+    const ov = document.getElementById('modal-overlay'); ov.classList.remove('hidden');
+    ov.innerHTML = `<div class="modal fade-in"><h3>Modifier la strategie</h3>
+        <input class="modal-input" id="e-name" value="${name}">
+        <select class="modal-input" id="e-status" style="cursor:pointer;background:var(--bg);color:var(--text)">
+            <option value="En test" ${status === 'En test' ? 'selected' : ''}>En test</option>
+            <option value="Validee" ${status === 'Validee' ? 'selected' : ''}>Validee</option>
+            <option value="En prod" ${status === 'En prod' ? 'selected' : ''}>En prod</option>
+        </select>
+        <div class="modal-row"><button class="btn btn-ghost" onclick="hideModal()">Annuler</button>
+        <button class="btn btn-primary" onclick="saveEdit(${id})">Enregistrer</button></div></div>`;
+}
+
+async function saveEdit(id) {
+    const name = document.getElementById('e-name').value.trim();
+    const status = document.getElementById('e-status').value;
+    if (name) await sb.from('strategies').update({ name, status }).eq('id', id);
+    hideModal(); renderStrategies();
+}
+
+function deleteStrategy(id, name) {
+    const ov = document.getElementById('modal-overlay'); ov.classList.remove('hidden');
+    ov.innerHTML = `<div class="modal fade-in"><h3>Supprimer "${name}" ?</h3><p>Cette action est irreversible.</p>
+        <div class="modal-row"><button class="btn btn-ghost" onclick="hideModal()">Annuler</button>
+        <button class="btn btn-danger" onclick="confirmDeleteStrategy(${id})">Supprimer</button></div></div>`;
+}
+
+async function confirmDeleteStrategy(id) {
+    // Delete associated files from storage
+    const { data: files } = await sb.from('files').select('file_path').eq('strategy_id', id);
+    if (files && files.length > 0) {
+        await sb.storage.from('files').remove(files.map(f => f.file_path));
+    }
+    await sb.from('files').delete().eq('strategy_id', id);
+    await sb.from('strategies').delete().eq('id', id);
+    hideModal(); renderStrategies();
+}
+
+// ── DETAIL ──
+async function renderDetail(id) {
+    document.getElementById('mc').innerHTML = '<div class="loading">Chargement...</div>';
+    const { data: s } = await sb.from('strategies').select('*').eq('id', id).single();
+    if (!s) { go('strategies'); return; }
+    const { data: files } = await sb.from('files').select('*').eq('strategy_id', id).order('id');
+
+    const fondamentaux = (files || []).filter(f => f.section === 'fondamentaux');
+    const rapports = (files || []).filter(f => f.section === 'rapports');
+
+    function fileList(arr, sec) {
+        if (arr.length === 0) return `<div class="empty-files">Aucun fichier pour le moment</div>`;
+        return `<div class="file-list">${arr.map((f, i) => {
+            const url = sb.storage.from('files').getPublicUrl(f.file_path).data.publicUrl;
+            const isHtml = f.name.endsWith('.html') || f.name.endsWith('.htm');
+            return `<div class="file-row fade-in" style="animation-delay:${i * 0.03}s">
+                <div class="file-dot ${getFileDotClass(f.name)}"></div>
+                <div class="file-info">
+                    <div class="file-name" onclick="event.stopPropagation();startRename(${f.id},'${f.name.replace(/'/g, "\\'")}')" title="Cliquer pour renommer">${f.name}</div>
+                    <div class="file-meta">${formatSize(f.size)} &middot; ${new Date(f.created_at).toLocaleDateString('fr-FR')}</div>
+                </div>
+                <div class="file-actions">
+                    ${isHtml ? `<button class="file-preview-btn" onclick="event.stopPropagation();go('file-preview',{fileId:${f.id},stratId:${id},name:'${f.name.replace(/'/g, "\\'")}',path:'${f.file_path}',stratName:'${s.name.replace(/'/g, "\\'")}'})">Voir</button>` : ''}
+                    <button class="file-action-btn star" onclick="event.stopPropagation();starFile(${f.id},'${f.name.replace(/'/g, "\\'")}','${f.file_path}',${f.size||0},'${s.name.replace(/'/g, "\\'")}','${sec}')" title="Envoyer dans Validees">&#9733;</button>
+                    <button class="file-action-btn del" onclick="event.stopPropagation();deleteFile(${f.id},'${f.file_path}',${id})" title="Supprimer">&#10005;</button>
+                </div>
+            </div>`;
+        }).join('')}</div>`;
+    }
+
+    function uploadBtn(sec) {
+        return `<label class="upload-btn">${svgUp} Telecharger
+            <input type="file" class="upload-input" multiple onchange="handleUpload(${id},'${sec}',this.files);this.value=''">
+        </label>`;
+    }
+
+    document.getElementById('mc').innerHTML = `
+        <div class="back-row fade-in"><div class="back-btn" onclick="go('strategies')"><span>&larr;</span> Retour</div>
+            <div class="breadcrumb"><span onclick="go('strategies')">Strategies</span><span class="bc-sep">&#9656;</span><span>${s.name}</span></div></div>
+        <div class="main-header fade-in" style="animation-delay:.05s">
+            <div class="main-title">${s.name}</div>
+            <span class="folder-status ${statusClass(s.status)}" style="font-size:12px;padding:6px 16px">${s.status}</span></div>
+        <div class="section-row fade-in" style="animation-delay:.08s"><div class="section-label">Fondamentaux</div>${uploadBtn('fondamentaux')}</div>
+        ${fileList(fondamentaux, 'fondamentaux')}
+        <div class="section-row fade-in" style="animation-delay:.14s"><div class="section-label">Rapports backtest</div>${uploadBtn('rapports')}</div>
+        ${fileList(rapports, 'rapports')}`;
+}
+
+async function handleUpload(stratId, section, filesList) {
+    for (const file of filesList) {
+        const path = `${stratId}/${section}/${Date.now()}_${file.name}`;
+        const { error } = await sb.storage.from('files').upload(path, file);
+        if (error) { toast('Erreur upload: ' + error.message, true); continue; }
+        await sb.from('files').insert({ strategy_id: stratId, section, name: file.name, file_path: path, size: file.size });
+    }
+    toast('&#10003; Fichier(s) uploade(s)');
+    renderDetail(stratId);
+}
+
+async function deleteFile(fileId, path, stratId) {
+    await sb.storage.from('files').remove([path]);
+    await sb.from('files').delete().eq('id', fileId);
+    renderDetail(stratId);
+}
+
+function startRename(fileId, currentName) {
+    const el = event.target;
+    el.outerHTML = `<input class="file-name-input" value="${currentName}" onblur="finishRename(${fileId},this)" onkeydown="if(event.key==='Enter')this.blur()">`;
+    const inp = el.parentElement?.querySelector('.file-name-input') || document.querySelector('.file-name-input');
+    if (inp) { inp.focus(); inp.select(); }
+}
+
+async function finishRename(fileId, inp) {
+    const n = inp.value.trim();
+    if (n) await sb.from('files').update({ name: n }).eq('id', fileId);
+    // Refresh current view - find strategy id from closest context
+    const backBtn = document.querySelector('.back-btn');
+    if (backBtn) backBtn.click();
+}
+
+async function starFile(fileId, name, path, size, stratName, section) {
+    await sb.from('validated').insert({
+        name, file_path: path, size,
+        origin_strategy: stratName,
+        origin_section: section === 'fondamentaux' ? 'Fondamentaux' : 'Rapports backtest'
+    });
+    updateBadges();
+    toast('&#9733; <strong>' + name + '</strong> duplique dans Validees');
+}
+
+// ── FILE PREVIEW ──
+function renderFilePreview(data) {
+    const url = sb.storage.from('files').getPublicUrl(data.path).data.publicUrl;
+    document.getElementById('mc').innerHTML = `
+        <div class="back-row fade-in"><div class="back-btn" onclick="go('detail',${data.stratId})"><span>&larr;</span> Retour</div>
+            <div class="breadcrumb"><span onclick="go('strategies')">Strategies</span><span class="bc-sep">&#9656;</span>
+            <span onclick="go('detail',${data.stratId})">${data.stratName}</span><span class="bc-sep">&#9656;</span><span>${data.name}</span></div></div>
+        <div class="main-title fade-in" style="margin-bottom:24px;animation-delay:.05s">${data.name}</div>
+        <div class="preview-frame fade-in" style="animation-delay:.1s">
+            <div class="preview-bar"><span class="preview-bar-name">${data.name}</span>
+                <div class="preview-actions"><button class="p-btn" onclick="openFS('pv-iframe')">Plein ecran</button>
+                <a class="p-btn" href="${url}" download style="text-decoration:none;color:var(--muted)">Telecharger</a></div></div>
+            <iframe id="pv-iframe" class="preview-iframe" src="${url}" sandbox="allow-scripts allow-same-origin"></iframe>
+        </div>`;
+}
+
+function openFS(id) { const e = document.getElementById(id); if (e.requestFullscreen) e.requestFullscreen(); else if (e.webkitRequestFullscreen) e.webkitRequestFullscreen(); }
+
+// ── VALIDATED ──
+async function renderValidated() {
+    document.getElementById('mc').innerHTML = '<div class="loading">Chargement...</div>';
+    const { data: vals } = await sb.from('validated').select('*').order('id', { ascending: false });
+    if (!vals || vals.length === 0) {
+        document.getElementById('mc').innerHTML = `
+            <div class="main-header fade-in"><div class="main-title">Validees</div></div>
+            <div class="empty-state fade-in" style="animation-delay:.05s"><div style="font-size:48px;opacity:0.3;margin-bottom:16px">&#9733;</div>
+            <p>Aucun fichier valide pour le moment.<br>Cliquez sur l'etoile d'un fichier pour le dupliquer ici.</p></div>`;
+        return;
+    }
+    let rows = vals.map((v, i) => {
+        const isHtml = v.name.endsWith('.html') || v.name.endsWith('.htm');
+        return `<div class="val-card fade-in" style="animation-delay:${i * 0.04}s">
+            <div class="val-header"><div>
+                <div class="val-name" onclick="startRenameVal(${v.id},'${v.name.replace(/'/g, "\\'")}')">${v.name}</div>
+                <div class="val-origin">Depuis : ${v.origin_strategy || '?'} &middot; ${v.origin_section || '?'} &middot; ${new Date(v.created_at).toLocaleDateString('fr-FR')}</div>
+            </div>
+            <div class="val-actions">
+                ${isHtml ? `<button class="file-preview-btn" onclick="go('val-preview',{id:${v.id},name:'${v.name.replace(/'/g, "\\'")}',path:'${v.file_path}'})">Voir</button>` : ''}
+                <button class="file-action-btn del" onclick="removeValidated(${v.id})" title="Supprimer">&#10005;</button>
+            </div></div></div>`;
+    }).join('');
+    document.getElementById('mc').innerHTML = `<div class="main-header fade-in"><div class="main-title">Validees</div></div>${rows}`;
+}
+
+async function removeValidated(id) {
+    await sb.from('validated').delete().eq('id', id);
+    updateBadges(); renderValidated();
+}
+
+function startRenameVal(id, name) {
+    const el = event.target;
+    el.outerHTML = `<input class="file-name-input" value="${name}" onblur="finishRenameVal(${id},this)" onkeydown="if(event.key==='Enter')this.blur()" style="font-size:16px;font-weight:700">`;
+    const inp = document.querySelector('.file-name-input');
+    if (inp) { inp.focus(); inp.select(); }
+}
+
+async function finishRenameVal(id, inp) {
+    const n = inp.value.trim();
+    if (n) await sb.from('validated').update({ name: n }).eq('id', id);
+    renderValidated();
+}
+
+function renderValPreview(data) {
+    const url = sb.storage.from('files').getPublicUrl(data.path).data.publicUrl;
+    document.getElementById('mc').innerHTML = `
+        <div class="back-row fade-in"><div class="back-btn" onclick="go('validated')"><span>&larr;</span> Retour</div>
+            <div class="breadcrumb"><span onclick="go('validated')">Validees</span><span class="bc-sep">&#9656;</span><span>${data.name}</span></div></div>
+        <div class="main-title fade-in" style="margin-bottom:24px;animation-delay:.05s">${data.name}</div>
+        <div class="preview-frame fade-in" style="animation-delay:.1s">
+            <div class="preview-bar"><span class="preview-bar-name">${data.name}</span>
+                <div class="preview-actions"><button class="p-btn" onclick="openFS('pv-iframe')">Plein ecran</button></div></div>
+            <iframe id="pv-iframe" class="preview-iframe" src="${url}" sandbox="allow-scripts allow-same-origin"></iframe>
+        </div>`;
+}
+
+// ── CHAT ──
+async function renderChat() {
+    document.getElementById('mc').innerHTML = '<div class="loading">Chargement...</div>';
+    const { data: msgs } = await sb.from('messages').select('*').order('id');
+    let chatHtml = (msgs || []).map((m, i) => {
+        const isTrader = m.author === 'Trader';
+        const time = new Date(m.created_at).toLocaleTimeString('fr-FR', { hour: '2-digit', minute: '2-digit' });
+        return `<div class="chat-msg ${isTrader ? 'me' : ''} fade-in" style="animation-delay:${i * 0.03}s">
+            <div class="chat-av ${isTrader ? 'av-t' : 'av-d'}">${isTrader ? 'T' : 'D'}</div>
+            <div class="chat-body"><div class="chat-name">${m.author} <span class="time">${time}</span></div>
+            <div class="chat-bubble">${m.content}</div></div></div>`;
+    }).join('');
+
+    document.getElementById('mc').innerHTML = `
+        <div class="main-header fade-in"><div class="main-title">Discussion</div></div>
+        <div class="chat-area" id="chat-area">${chatHtml}</div>
+        <div class="chat-input-row fade-in"><input class="chat-input" placeholder="Ecrire un message..." type="text" id="chat-msg-input" onkeydown="if(event.key==='Enter')sendMsg()">
+        <button class="chat-send" onclick="sendMsg()">Envoyer</button></div>`;
+
+    const area = document.getElementById('chat-area');
+    if (area) area.scrollTop = area.scrollHeight;
+}
+
+async function sendMsg() {
+    const inp = document.getElementById('chat-msg-input');
+    const t = inp.value.trim(); if (!t) return;
+    inp.value = '';
+    await sb.from('messages').insert({ author: 'Trader', content: t });
+    renderChat();
+}
+
+// ── ARCHIVES / SETTINGS ──
+function renderArchives() {
+    document.getElementById('mc').innerHTML = `
+        <div class="main-header fade-in"><div class="main-title">Archives</div></div>
+        <div class="empty-state fade-in" style="animation-delay:.05s"><div style="font-size:48px;opacity:0.3;margin-bottom:16px">&#9776;</div>
+        <p>Aucune strategie archivee pour le moment.</p></div>`;
+}
+
+function renderSettings() {
+    document.getElementById('mc').innerHTML = `
+        <div class="main-header fade-in"><div class="main-title">Parametres</div></div>
+        <div class="fade-in" style="animation-delay:.05s">
+            <div class="settings-section"><div class="section-label" style="margin-bottom:16px">Profil</div>
+                <div class="settings-label">Nom d'affichage</div><input class="settings-input" value="Trader">
+                <div class="settings-label" style="margin-top:16px">Role</div><input class="settings-input" value="Trader"></div>
+            <div class="settings-section"><div class="section-label" style="margin-bottom:16px">Apparence</div>
+                <div style="display:flex;gap:10px"><button class="btn btn-ghost" style="opacity:0.5;pointer-events:none">Clair</button>
+                <button class="btn btn-primary" style="pointer-events:none">Sombre</button></div></div>
+        </div>`;
+}
+
+// ── INIT ──
+document.getElementById('modal-overlay').addEventListener('click', function(e) { if (e.target === this) hideModal(); });
+document.addEventListener('keydown', function(e) { if (e.key === 'Escape') hideModal(); });
+go('strategies');
+</script>
+</body>
+</html>
