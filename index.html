@@ -139,6 +139,14 @@ body::before{content:'';position:fixed;inset:0;z-index:0;pointer-events:none;bac
 
 .modal-overlay{position:fixed;inset:0;background:rgba(0,0,0,0.6);z-index:100;display:flex;align-items:center;justify-content:center;backdrop-filter:blur(6px)}.modal-overlay.hidden{display:none}
 .modal{background:var(--bg2);border:1px solid var(--border);border-radius:20px;padding:32px;width:520px;max-width:92%;box-shadow:0 25px 60px rgba(0,0,0,0.4);max-height:90vh;overflow-y:auto}
+.modal-wide{width:95%;max-width:1400px;padding:0;display:flex;overflow:hidden;max-height:90vh}
+.modal-wide .val-form-side{width:420px;min-width:380px;padding:32px;overflow-y:auto;border-right:1px solid var(--border)}
+.modal-wide .val-preview-side{flex:1;display:flex;flex-direction:column;min-width:0}
+.modal-wide .val-preview-side .preview-bar{border-radius:0}
+.modal-wide .val-preview-side iframe{flex:1;width:100%;border:none;background:#fff;min-height:400px}
+.add-group-btn{display:flex;align-items:center;gap:8px;padding:14px 24px;border-radius:14px;border:2px dashed var(--border);background:transparent;color:var(--dim);font-size:13px;font-weight:600;cursor:pointer;font-family:var(--font);transition:all .2s;margin-bottom:32px}
+.add-group-btn:hover{border-color:var(--accent);color:var(--accent);background:rgba(139,92,246,0.04)}
+.group-del{color:var(--dim);cursor:pointer;font-size:14px;transition:color .2s;margin-left:auto}.group-del:hover{color:var(--red)}
 .modal h3{font-size:18px;font-weight:700;margin-bottom:10px}.modal p{font-size:13px;color:var(--muted);margin-bottom:20px;line-height:1.6}
 .modal-input{width:100%;background:var(--bg);border:1px solid var(--border);border-radius:12px;padding:13px 18px;font-size:14px;color:var(--text);font-family:var(--font);outline:none;margin-bottom:14px}.modal-input:focus{border-color:rgba(139,92,246,0.4)}.modal-input::placeholder{color:var(--dim)}
 .modal-row{display:flex;gap:10px;justify-content:flex-end;margin-top:12px}
@@ -207,24 +215,40 @@ async function addNote(){const inp=document.getElementById('ni');const t=inp.val
 async function delNote(id){await sb.from('messages').delete().eq('id',id);renderDash()}
 
 // ── STRATEGIES (grouped) ──
+let storedGroups=JSON.parse(localStorage.getItem('storedGroups')||'[]');
+function saveGroups(){localStorage.setItem('storedGroups',JSON.stringify(storedGroups))}
+
 async function renderStrats(){document.getElementById('mc').innerHTML='<div class="loading">Chargement...</div>';
 const{data:st}=await sb.from('strategies').select('*').order('id');const{data:af}=await sb.from('files').select('strategy_id');
 const fc={};(af||[]).forEach(f=>{fc[f.strategy_id]=(fc[f.strategy_id]||0)+1});
-const groups={};(st||[]).forEach(s=>{const g=s.group_name||'General';if(!groups[g])groups[g]=[];groups[g].push(s)});
-let html=`<div class="main-header"><div class="main-title">Backtesting</div><button class="btn btn-primary" onclick="showAdd()">+ Nouvelle strategie</button></div>`;
+const groups={};
+storedGroups.forEach(g=>{if(!groups[g])groups[g]=[]});
+(st||[]).forEach(s=>{const g=s.group_name||'General';if(!groups[g])groups[g]=[];groups[g].push(s)});
+let html=`<div class="main-header"><div class="main-title">Backtesting</div><div style="display:flex;gap:10px"><button class="btn btn-ghost" onclick="showAddGroup()">+ Groupe</button><button class="btn btn-primary" onclick="showAdd()">+ Strategie</button></div></div>`;
 Object.keys(groups).forEach(g=>{const items=groups[g];
 html+=`<div class="group-section"><div class="group-header">
-<div class="group-name" onclick="editGN(this,'${esc(g)}')">${g}</div><div class="group-count">${items.length} strategie${items.length>1?'s':''}</div></div>
+<div class="group-name" onclick="editGN(this,'${esc(g)}')">${g}</div><div class="group-count">${items.length} strategie${items.length>1?'s':''}</div>
+<div class="group-del" onclick="delGroup('${esc(g)}')" title="Supprimer le groupe">&#10005;</div></div>
 <div class="drop-zone group-grid" data-group="${g}" ondragover="event.preventDefault();this.classList.add('over')" ondragleave="this.classList.remove('over')" ondrop="dropCard(event,'${esc(g)}')">
 ${items.map((s,i)=>{const c=fc[s.id]||0;return`<div class="folder-card fade-in" draggable="true" data-id="${s.id}" ondragstart="dragId=${s.id};this.classList.add('dragging')" ondragend="this.classList.remove('dragging')" onclick="go('detail',${s.id})">
 <div class="folder-top"><span class="folder-status ${stCls(s.status)}">${s.status}</span><div class="folder-actions" onclick="event.stopPropagation()">
 <div class="icon-btn" onclick="editS(${s.id},'${esc(s.name)}','${s.status}','${esc(s.group_name||'General')}')">&#9998;</div><div class="icon-btn danger" onclick="delS(${s.id},'${esc(s.name)}')">&#10005;</div></div></div>
-<div class="folder-name">${s.name}</div>${c?`<div class="folder-meta">${c} fichier${c>1?'s':''}</div>`:`<div class="folder-meta" style="color:var(--dim)">Aucun fichier</div>`}</div>`}).join('')}</div></div>`});
+<div class="folder-name">${s.name}</div>${c?`<div class="folder-meta">${c} fichier${c>1?'s':''}</div>`:`<div class="folder-meta" style="color:var(--dim)">Aucun fichier</div>`}</div>`}).join('')}
+${items.length===0?'<div style="padding:20px;text-align:center;color:var(--dim);font-size:13px">Glissez une strategie ici</div>':''}
+</div></div>`});
 document.getElementById('mc').innerHTML=html;updateBadges()}
 
+function showAddGroup(){const o=document.getElementById('modal-overlay');o.classList.remove('hidden');o.innerHTML=`<div class="modal fade-in"><h3>Nouveau groupe</h3><input class="modal-input" id="g-n" placeholder="Nom du groupe" autofocus><div class="modal-row"><button class="btn btn-ghost" onclick="hideModal()">Annuler</button><button class="btn btn-primary" onclick="addGroup()">Creer</button></div></div>`;setTimeout(()=>document.getElementById('g-n')?.focus(),50)}
+function addGroup(){const n=document.getElementById('g-n').value.trim();if(!n)return;if(!storedGroups.includes(n))storedGroups.push(n);saveGroups();hideModal();renderStrats()}
+async function delGroup(name){storedGroups=storedGroups.filter(g=>g!==name);saveGroups();
+await sb.from('strategies').update({group_name:'General'}).eq('group_name',name);renderStrats()}
+
 function editGN(el,old){el.outerHTML=`<input class="group-name-input" value="${old}" onblur="saveGN(this,'${esc(old)}')" onkeydown="if(event.key==='Enter')this.blur()">`;const inp=document.querySelector('.group-name-input');if(inp){inp.focus();inp.select()}}
-async function saveGN(inp,old){const n=inp.value.trim();if(n&&n!==old){await sb.from('strategies').update({group_name:n}).eq('group_name',old)}renderStrats()}
-async function dropCard(e,group){e.preventDefault();e.currentTarget.classList.remove('over');if(!dragId)return;await sb.from('strategies').update({group_name:group}).eq('id',dragId);dragId=null;renderStrats()}
+async function saveGN(inp,old){const n=inp.value.trim();if(n&&n!==old){await sb.from('strategies').update({group_name:n}).eq('group_name',old);const idx=storedGroups.indexOf(old);if(idx>=0)storedGroups[idx]=n;else storedGroups.push(n);storedGroups=storedGroups.filter(g=>g!==old||g===n);saveGroups()}renderStrats()}
+async function dropCard(e,group){e.preventDefault();e.currentTarget.classList.remove('over');if(!dragId)return;
+const{data:old}=await sb.from('strategies').select('group_name').eq('id',dragId).single();
+if(old&&old.group_name&&!storedGroups.includes(old.group_name)){storedGroups.push(old.group_name);saveGroups()}
+await sb.from('strategies').update({group_name:group}).eq('id',dragId);dragId=null;renderStrats()}
 
 function showAdd(){const o=document.getElementById('modal-overlay');o.classList.remove('hidden');o.innerHTML=`<div class="modal fade-in"><h3>Nouvelle strategie</h3><input class="modal-input" id="m-n" placeholder="Nom" autofocus><input class="modal-input" id="m-g" placeholder="Groupe (ex: Asian Sweep)"><div class="modal-row"><button class="btn btn-ghost" onclick="hideModal()">Annuler</button><button class="btn btn-primary" onclick="addS()">Ajouter</button></div></div>`;setTimeout(()=>document.getElementById('m-n')?.focus(),50)}
 async function addS(){const n=document.getElementById('m-n').value.trim(),g=document.getElementById('m-g').value.trim()||'General';if(!n)return;await sb.from('strategies').insert({name:n,status:'En test',group_name:g});hideModal();renderStrats()}
@@ -262,8 +286,12 @@ async function rnE(fid,inp){const n=inp.value.trim();if(n)await sb.from('files')
 // ── STAR ──
 function starF(fid,name,path,size,sn,sec){if(sec==='rapports'){showValModal(fid,name,path,size,sn)}else{simpleStar(name,path,size,sn,sec)}}
 async function simpleStar(name,path,size,sn,sec){await sb.from('validated').insert({name,file_path:path,size,origin_strategy:sn,origin_section:getSN(0,sec)});updateBadges();toast('&#9733; <b>'+name+'</b> dans Validees')}
-function showValModal(fid,name,path,size,sn){const o=document.getElementById('modal-overlay');o.classList.remove('hidden');
-o.innerHTML=`<div class="modal fade-in"><h3>&#9733; Valider une configuration</h3><p>Parametres de la config choisie dans <b>${name}</b></p>
+async function showValModal(fid,name,path,size,sn){const o=document.getElementById('modal-overlay');o.classList.remove('hidden');
+const url=sb.storage.from('files').getPublicUrl(path).data.publicUrl;
+let docHtml='';try{const r=await fetch(url);docHtml=await r.text()}catch(e){docHtml='<p>Erreur de chargement</p>'}
+o.innerHTML=`<div class="modal modal-wide fade-in">
+<div class="val-form-side">
+<h3>&#9733; Valider une configuration</h3><p>Remplissez les parametres en consultant le rapport a droite</p>
 <input class="modal-input" id="v-name" placeholder="Nom" value="${sn} - Config #">
 <div class="modal-grid">
 <div class="modal-field"><label>Config #</label><input id="v-cfg" placeholder="3"></div>
@@ -282,7 +310,13 @@ o.innerHTML=`<div class="modal fade-in"><h3>&#9733; Valider une configuration</h
 <div class="modal-field"><label>Trades</label><input id="v-tr" placeholder="24"></div>
 <div class="modal-field"><label>Sharpe</label><input id="v-sh" placeholder="1.58"></div>
 </div>
-<div class="modal-row"><button class="btn btn-ghost" onclick="hideModal()">Annuler</button><button class="btn btn-primary" onclick="submitVal('${esc(name)}','${path}',${size},'${esc(sn)}')">&#9733; Valider</button></div></div>`;setTimeout(()=>document.getElementById('v-cfg')?.focus(),50)}
+<div class="modal-row"><button class="btn btn-ghost" onclick="hideModal()">Annuler</button><button class="btn btn-primary" onclick="submitVal('${esc(name)}','${path}',${size},'${esc(sn)}')">&#9733; Valider</button></div>
+</div>
+<div class="val-preview-side">
+<div class="preview-bar"><span class="preview-bar-name">${name}</span><div class="preview-actions"><button class="p-btn" onclick="openFS('val-pv')">Plein ecran</button></div></div>
+<iframe id="val-pv"></iframe>
+</div></div>`;
+setTimeout(()=>{const f=document.getElementById('val-pv');if(f){const d=f.contentDocument||f.contentWindow.document;d.open();d.write(docHtml);d.close()}document.getElementById('v-cfg')?.focus()},150)}
 async function submitVal(fn,path,size,sn){const name=document.getElementById('v-name').value.trim()||sn;
 const wbe=document.getElementById('v-wbe').value,stp=document.getElementById('v-stp').value;
 const be=document.getElementById('v-be').value.trim()+(wbe==='Non'?' (off)':'');
