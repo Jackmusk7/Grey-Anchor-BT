@@ -37,25 +37,38 @@ body::before{content:'';position:fixed;inset:0;z-index:0;pointer-events:none;bac
 .back-btn{display:flex;align-items:center;gap:8px;font-size:13px;color:var(--muted);cursor:pointer;padding:8px 16px;border-radius:10px;background:var(--surface2);border:1px solid var(--border);font-family:var(--font);transition:all .2s}
 .back-btn:hover{color:var(--text);border-color:var(--border-hi)}
 .breadcrumb{font-size:12px;color:var(--muted);display:flex;align-items:center;gap:8px}
-.breadcrumb span{cursor:pointer;transition:color .2s}.breadcrumb span:hover{color:var(--text)}
-.bc-sep{color:var(--dim);font-size:10px}
+.breadcrumb span{cursor:pointer;transition:color .2s}.breadcrumb span:hover{color:var(--text)}.bc-sep{color:var(--dim);font-size:10px}
 .btn{display:inline-flex;align-items:center;gap:8px;padding:10px 22px;border-radius:12px;font-size:13px;font-weight:600;cursor:pointer;font-family:var(--font);transition:all .2s;border:none;white-space:nowrap}
-.btn-primary{background:linear-gradient(135deg,var(--accent),#7c3aed);color:#fff;box-shadow:0 4px 20px rgba(139,92,246,0.25)}
-.btn-primary:hover{transform:translateY(-1px);box-shadow:0 6px 25px rgba(139,92,246,0.35)}
+.btn-primary{background:linear-gradient(135deg,var(--accent),#7c3aed);color:#fff;box-shadow:0 4px 20px rgba(139,92,246,0.25)}.btn-primary:hover{transform:translateY(-1px);box-shadow:0 6px 25px rgba(139,92,246,0.35)}
 .btn-ghost{background:var(--surface2);color:var(--muted);border:1px solid var(--border)}.btn-ghost:hover{color:var(--text);border-color:var(--border-hi)}
 .btn-danger{background:rgba(239,68,68,0.1);color:var(--red);border:1px solid rgba(239,68,68,0.15)}.btn-danger:hover{background:rgba(239,68,68,0.18)}
-.folder-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:20px}
-.folder-card{background:var(--bg2);border:1px solid var(--border);border-radius:16px;padding:28px;cursor:pointer;transition:all .3s;position:relative;overflow:hidden}
+.btn-sm{padding:6px 14px;font-size:11px;border-radius:8px}
+
+/* Groups */
+.group-section{margin-bottom:32px}
+.group-header{display:flex;align-items:center;gap:14px;margin-bottom:16px;padding-bottom:12px;border-bottom:1px solid var(--border)}
+.group-name{font-size:13px;font-weight:600;letter-spacing:2px;text-transform:uppercase;color:var(--muted);cursor:pointer;padding:4px 8px;margin:-4px -8px;border-radius:6px;border:1px solid transparent;transition:all .2s}
+.group-name:hover{border-color:var(--border);background:rgba(255,255,255,0.02)}
+.group-name-input{font-size:13px;font-weight:600;letter-spacing:2px;text-transform:uppercase;background:var(--bg);border:1px solid rgba(139,92,246,0.4);border-radius:6px;padding:4px 8px;color:var(--muted);font-family:var(--font);outline:none}
+.group-count{font-size:11px;color:var(--dim);font-family:var(--mono)}
+.group-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:16px}
+
+/* Cards */
+.folder-card{background:var(--bg2);border:1px solid var(--border);border-radius:16px;padding:24px;cursor:pointer;transition:all .3s;position:relative;overflow:hidden}
 .folder-card::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,var(--accent),var(--accent2));opacity:0;transition:opacity .3s}
-.folder-card:hover{border-color:var(--border-hi);transform:translateY(-3px);box-shadow:0 12px 40px rgba(0,0,0,0.3)}
-.folder-card:hover::before{opacity:1}
-.folder-top{display:flex;align-items:center;justify-content:space-between;margin-bottom:18px}
-.folder-status{font-size:11px;font-weight:600;letter-spacing:0.8px;text-transform:uppercase;padding:5px 14px;border-radius:8px}
+.folder-card:hover{border-color:var(--border-hi);transform:translateY(-3px);box-shadow:0 12px 40px rgba(0,0,0,0.3)}.folder-card:hover::before{opacity:1}
+.folder-card[draggable="true"]{cursor:grab}.folder-card.dragging{opacity:0.4;cursor:grabbing}
+.folder-top{display:flex;align-items:center;justify-content:space-between;margin-bottom:14px}
+.folder-status{font-size:10px;font-weight:600;letter-spacing:0.8px;text-transform:uppercase;padding:4px 12px;border-radius:8px}
 .st-en-test{background:rgba(245,158,11,0.12);color:var(--amber)}.st-validee{background:rgba(34,197,94,0.12);color:var(--green)}.st-en-prod{background:rgba(139,92,246,0.12);color:#a78bfa}
-.folder-actions{display:flex;gap:8px}
-.icon-btn{width:32px;height:32px;border-radius:8px;background:var(--surface2);border:1px solid var(--border);color:var(--muted);display:flex;align-items:center;justify-content:center;cursor:pointer;font-size:14px;transition:all .15s}
+.folder-actions{display:flex;gap:6px}
+.icon-btn{width:30px;height:30px;border-radius:8px;background:var(--surface2);border:1px solid var(--border);color:var(--muted);display:flex;align-items:center;justify-content:center;cursor:pointer;font-size:13px;transition:all .15s}
 .icon-btn:hover{color:var(--text);border-color:var(--border-hi)}.icon-btn.danger:hover{color:var(--red);border-color:rgba(239,68,68,0.3);background:rgba(239,68,68,0.08)}
-.folder-name{font-size:20px;font-weight:700}.folder-meta{font-size:13px;color:var(--muted);margin-top:8px}
+.folder-name{font-size:18px;font-weight:700}.folder-meta{font-size:12px;color:var(--muted);margin-top:6px}
+.drop-zone{min-height:60px;border:2px dashed transparent;border-radius:12px;transition:all .3s;padding:8px}
+.drop-zone.over{border-color:var(--accent);background:rgba(139,92,246,0.04)}
+
+/* Section rows in detail */
 .section-row{display:flex;align-items:center;justify-content:space-between;margin:36px 0 18px}
 .section-label{font-size:11px;font-weight:600;letter-spacing:3px;text-transform:uppercase;color:var(--dim);display:flex;align-items:center;gap:14px;cursor:pointer;padding:4px 8px;margin:-4px -8px;border-radius:6px;border:1px solid transparent;transition:all .2s}
 .section-label:hover{border-color:var(--border);background:rgba(255,255,255,0.02)}
@@ -86,79 +99,75 @@ body::before{content:'';position:fixed;inset:0;z-index:0;pointer-events:none;bac
 .preview-iframe{width:100%;min-height:600px;border:none;background:#fff}
 .empty-state{text-align:center;padding:60px 24px;color:var(--dim)}.empty-state p{font-size:14px;margin-top:12px;color:var(--muted);line-height:1.6}
 .empty-files{text-align:center;padding:28px;color:var(--dim);font-size:13px;border:1px dashed var(--border);border-radius:12px}
+
+/* Validated */
 .val-card{background:var(--bg2);border:1px solid var(--border);border-radius:16px;padding:28px;margin-bottom:20px;position:relative;overflow:hidden}
 .val-card::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,var(--green),var(--accent2))}
-.val-header{display:flex;align-items:flex-start;justify-content:space-between;margin-bottom:20px;gap:16px}
-.val-name{font-size:20px;font-weight:700}.val-origin{font-size:12px;color:var(--muted);margin-top:6px}
+.val-header{display:flex;align-items:flex-start;justify-content:space-between;margin-bottom:16px;gap:16px}
+.val-name{font-size:20px;font-weight:700}
+.val-subtitle{font-size:12px;color:var(--muted);margin-top:6px;cursor:pointer;padding:2px 6px;margin-left:-6px;border-radius:4px;border:1px solid transparent;transition:all .2s}
+.val-subtitle:hover{border-color:var(--border);background:rgba(255,255,255,0.02)}
+.val-subtitle-input{font-size:12px;background:var(--bg);border:1px solid rgba(139,92,246,0.4);border-radius:4px;padding:4px 8px;color:var(--muted);font-family:var(--font);outline:none;width:100%}
 .val-actions{display:flex;gap:8px;flex-shrink:0;align-items:center}
-.kpi-strip{display:grid;grid-template-columns:repeat(auto-fill,minmax(140px,1fr));gap:12px;margin-bottom:20px}
-.kpi-box{background:rgba(255,255,255,0.03);border:1px solid var(--border);border-radius:12px;padding:16px;text-align:center}
+.kpi-strip{display:grid;grid-template-columns:repeat(auto-fill,minmax(130px,1fr));gap:10px;margin-bottom:16px}
+.kpi-box{background:rgba(255,255,255,0.03);border:1px solid var(--border);border-radius:12px;padding:14px;text-align:center}
 .kpi-label{font-size:10px;text-transform:uppercase;letter-spacing:1.5px;color:var(--dim);font-weight:600}
-.kpi-val{font-size:18px;font-weight:700;font-family:var(--mono);margin-top:6px}
-.kpi-val.g{color:var(--green)}.kpi-val.r{color:var(--red)}.kpi-val.b{color:var(--accent2)}.kpi-val.a{color:var(--accent)}
-.params-row{display:grid;grid-template-columns:repeat(auto-fill,minmax(110px,1fr));gap:10px}
-.param-chip{background:rgba(255,255,255,0.03);border:1px solid var(--border);border-radius:10px;padding:12px;text-align:center}
+.kpi-val{font-size:17px;font-weight:700;font-family:var(--mono);margin-top:5px}
+.kpi-val.g{color:var(--green)}.kpi-val.r{color:var(--red)}.kpi-val.b{color:var(--accent2)}
+.params-row{display:flex;flex-wrap:wrap;gap:8px;align-items:center}
+.param-chip{background:rgba(255,255,255,0.03);border:1px solid var(--border);border-radius:10px;padding:10px 14px;text-align:center}
 .param-chip-label{font-size:9px;color:var(--dim);text-transform:uppercase;letter-spacing:1px;font-weight:600}
-.param-chip-val{font-size:15px;font-weight:700;font-family:var(--mono);margin-top:4px}
-.settings-section{margin-bottom:32px}.settings-label{font-size:13px;color:var(--muted);margin-bottom:10px}
-.settings-input{width:100%;max-width:400px;background:var(--bg2);border:1px solid var(--border);border-radius:12px;padding:13px 18px;font-size:14px;color:var(--text);font-family:var(--font);outline:none}
-.modal-overlay{position:fixed;inset:0;background:rgba(0,0,0,0.6);z-index:100;display:flex;align-items:center;justify-content:center;backdrop-filter:blur(6px)}
-.modal-overlay.hidden{display:none}
+.param-chip-val{font-size:14px;font-weight:700;font-family:var(--mono);margin-top:3px}
+.add-chip-btn{width:36px;height:52px;border-radius:10px;border:1px dashed var(--border);background:transparent;color:var(--dim);display:flex;align-items:center;justify-content:center;cursor:pointer;font-size:18px;transition:all .2s}
+.add-chip-btn:hover{border-color:var(--accent);color:var(--accent);background:rgba(139,92,246,0.04)}
+
+/* Dashboard */
+.dash-grid{display:grid;grid-template-columns:1fr 1fr;gap:24px;margin-bottom:32px}
+.dash-card{background:var(--bg2);border:1px solid var(--border);border-radius:16px;padding:24px}
+.dash-card-title{font-size:14px;font-weight:600;margin-bottom:16px;color:var(--muted)}
+.dash-stat-row{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-bottom:24px}
+.dash-stat{background:var(--bg2);border:1px solid var(--border);border-radius:14px;padding:20px;text-align:center}
+.dash-stat-val{font-size:28px;font-weight:800;font-family:var(--mono)}.dash-stat-label{font-size:11px;color:var(--muted);margin-top:6px;text-transform:uppercase;letter-spacing:1px}
+.note-card{background:var(--bg3);border:1px solid var(--border);border-radius:12px;padding:14px 18px;margin-bottom:10px;display:flex;align-items:flex-start;gap:12px}
+.note-text{flex:1;font-size:13px;line-height:1.5}.note-time{font-size:10px;color:var(--dim);white-space:nowrap;flex-shrink:0;margin-top:2px}
+.note-del{color:var(--dim);cursor:pointer;font-size:14px;transition:color .2s;flex-shrink:0}.note-del:hover{color:var(--red)}
+.note-input-row{display:flex;gap:10px;margin-top:12px}
+.note-input{flex:1;background:var(--bg);border:1px solid var(--border);border-radius:10px;padding:10px 16px;font-size:13px;color:var(--text);font-family:var(--font);outline:none}.note-input:focus{border-color:rgba(139,92,246,0.4)}.note-input::placeholder{color:var(--dim)}
+.note-send{background:var(--accent);border:none;color:#fff;padding:10px 18px;border-radius:10px;font-size:13px;font-weight:600;cursor:pointer;font-family:var(--font)}
+.recent-file{display:flex;align-items:center;gap:12px;padding:10px 14px;border-radius:10px;transition:background .2s}.recent-file:hover{background:var(--surface2)}
+.recent-file-name{font-size:13px;font-weight:600;flex:1;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.recent-file-meta{font-size:10px;color:var(--dim)}
+
+.modal-overlay{position:fixed;inset:0;background:rgba(0,0,0,0.6);z-index:100;display:flex;align-items:center;justify-content:center;backdrop-filter:blur(6px)}.modal-overlay.hidden{display:none}
 .modal{background:var(--bg2);border:1px solid var(--border);border-radius:20px;padding:32px;width:520px;max-width:92%;box-shadow:0 25px 60px rgba(0,0,0,0.4);max-height:90vh;overflow-y:auto}
-.modal h3{font-size:18px;font-weight:700;margin-bottom:10px}
-.modal p{font-size:13px;color:var(--muted);margin-bottom:20px;line-height:1.6}
-.modal-input{width:100%;background:var(--bg);border:1px solid var(--border);border-radius:12px;padding:13px 18px;font-size:14px;color:var(--text);font-family:var(--font);outline:none;margin-bottom:14px}
-.modal-input:focus{border-color:rgba(139,92,246,0.4)}.modal-input::placeholder{color:var(--dim)}
+.modal h3{font-size:18px;font-weight:700;margin-bottom:10px}.modal p{font-size:13px;color:var(--muted);margin-bottom:20px;line-height:1.6}
+.modal-input{width:100%;background:var(--bg);border:1px solid var(--border);border-radius:12px;padding:13px 18px;font-size:14px;color:var(--text);font-family:var(--font);outline:none;margin-bottom:14px}.modal-input:focus{border-color:rgba(139,92,246,0.4)}.modal-input::placeholder{color:var(--dim)}
 .modal-row{display:flex;gap:10px;justify-content:flex-end;margin-top:12px}
 .modal-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:14px}
 .modal-field{display:flex;flex-direction:column;gap:4px}
 .modal-field label{font-size:11px;color:var(--muted);font-weight:600;letter-spacing:0.5px;text-transform:uppercase}
-.modal-field input,.modal-field select{background:var(--bg);border:1px solid var(--border);border-radius:10px;padding:10px 14px;font-size:13px;color:var(--text);font-family:var(--mono);outline:none}
-.modal-field input:focus,.modal-field select:focus{border-color:rgba(139,92,246,0.4)}
-.modal-field input::placeholder{color:var(--dim)}
-.modal-field select{cursor:pointer}
-.toast{position:fixed;bottom:24px;right:24px;background:var(--bg2);border:1px solid var(--green);border-radius:12px;padding:14px 22px;font-size:13px;color:var(--green);z-index:200;box-shadow:0 8px 30px rgba(0,0,0,0.4);animation:slideUp .3s ease,fadeOut .3s ease 2s forwards}
-.toast.error{border-color:var(--red);color:var(--red)}
+.modal-field input,.modal-field select{background:var(--bg);border:1px solid var(--border);border-radius:10px;padding:10px 14px;font-size:13px;color:var(--text);font-family:var(--mono);outline:none}.modal-field input:focus,.modal-field select:focus{border-color:rgba(139,92,246,0.4)}.modal-field input::placeholder{color:var(--dim)}.modal-field select{cursor:pointer}
+.toast{position:fixed;bottom:24px;right:24px;background:var(--bg2);border:1px solid var(--green);border-radius:12px;padding:14px 22px;font-size:13px;color:var(--green);z-index:200;box-shadow:0 8px 30px rgba(0,0,0,0.4);animation:slideUp .3s ease,fadeOut .3s ease 2s forwards}.toast.error{border-color:var(--red);color:var(--red)}
 @keyframes slideUp{from{transform:translateY(20px);opacity:0}to{transform:translateY(0);opacity:1}}
 @keyframes fadeOut{to{opacity:0;transform:translateY(10px)}}
 @keyframes fadeIn{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
 .fade-in{animation:fadeIn .3s ease forwards}
 .loading{text-align:center;padding:40px;color:var(--muted);font-size:14px}
 .main::-webkit-scrollbar{width:6px}.main::-webkit-scrollbar-track{background:transparent}.main::-webkit-scrollbar-thumb{background:var(--border-hi);border-radius:3px}
-
-.dash-grid{display:grid;grid-template-columns:1fr 1fr;gap:24px;margin-bottom:32px}
-.dash-card{background:var(--bg2);border:1px solid var(--border);border-radius:16px;padding:24px}
-.dash-card-title{font-size:14px;font-weight:600;margin-bottom:16px;color:var(--muted);display:flex;align-items:center;justify-content:space-between}
-.dash-stat-row{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-bottom:24px}
-.dash-stat{background:var(--bg2);border:1px solid var(--border);border-radius:14px;padding:20px;text-align:center}
-.dash-stat-val{font-size:28px;font-weight:800;font-family:var(--mono)}
-.dash-stat-label{font-size:11px;color:var(--muted);margin-top:6px;text-transform:uppercase;letter-spacing:1px}
-.note-card{background:var(--bg3);border:1px solid var(--border);border-radius:12px;padding:14px 18px;margin-bottom:10px;display:flex;align-items:flex-start;gap:12px}
-.note-text{flex:1;font-size:13px;line-height:1.5}
-.note-time{font-size:10px;color:var(--dim);white-space:nowrap;flex-shrink:0;margin-top:2px}
-.note-del{color:var(--dim);cursor:pointer;font-size:14px;transition:color .2s;flex-shrink:0;margin-top:1px}.note-del:hover{color:var(--red)}
-.note-input-row{display:flex;gap:10px;margin-top:12px}
-.note-input{flex:1;background:var(--bg);border:1px solid var(--border);border-radius:10px;padding:10px 16px;font-size:13px;color:var(--text);font-family:var(--font);outline:none}
-.note-input:focus{border-color:rgba(139,92,246,0.4)}
-.note-input::placeholder{color:var(--dim)}
-.note-send{background:var(--accent);border:none;color:#fff;padding:10px 18px;border-radius:10px;font-size:13px;font-weight:600;cursor:pointer;font-family:var(--font)}
-.recent-file{display:flex;align-items:center;gap:12px;padding:10px 14px;border-radius:10px;transition:background .2s;cursor:pointer}
-.recent-file:hover{background:var(--surface2)}
-.recent-file-name{font-size:13px;font-weight:600;flex:1;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-.recent-file-meta{font-size:10px;color:var(--dim)}
+.settings-section{margin-bottom:32px}.settings-label{font-size:13px;color:var(--muted);margin-bottom:10px}
+.settings-input{width:100%;max-width:400px;background:var(--bg2);border:1px solid var(--border);border-radius:12px;padding:13px 18px;font-size:14px;color:var(--text);font-family:var(--font);outline:none}
 </style>
 </head>
 <body>
 <div class="sidebar">
-    <div class="logo-area"><div class="logo-row"><div class="logo-icon">SH</div><div><div class="logo-text">Strategy Hub</div><div class="logo-sub">Trading Lab</div></div></div></div>
-    <div class="nav">
-        <div id="nav-d" class="nav-item active" onclick="go('dashboard')">Dashboard</div>
-        <div id="nav-s" class="nav-item" onclick="go('strategies')">Backtesting <span class="nav-badge" id="badge-s">0</span></div>
-        <div id="nav-v" class="nav-item" onclick="go('validated')">Validees <span class="nav-badge" id="badge-v">0</span></div>
-        <div class="nav-sep"></div>
-        <div id="nav-p" class="nav-item" onclick="go('settings')">Parametres</div>
-    </div>
-    <div class="sidebar-footer"><div class="user-row"><div class="user-av">T</div><div><div class="user-name">Trader</div><div class="user-role">En ligne <span class="dot-online"></span></div></div></div></div>
+<div class="logo-area"><div class="logo-row"><div class="logo-icon">SH</div><div><div class="logo-text">Strategy Hub</div><div class="logo-sub">Trading Lab</div></div></div></div>
+<div class="nav">
+<div id="nav-d" class="nav-item active" onclick="go('dashboard')">Dashboard</div>
+<div id="nav-s" class="nav-item" onclick="go('strategies')">Backtesting <span class="nav-badge" id="badge-s">0</span></div>
+<div id="nav-v" class="nav-item" onclick="go('validated')">Validees <span class="nav-badge" id="badge-v">0</span></div>
+<div class="nav-sep"></div>
+<div id="nav-p" class="nav-item" onclick="go('settings')">Parametres</div>
+</div>
+<div class="sidebar-footer"><div class="user-row"><div class="user-av">T</div><div><div class="user-name">Trader</div><div class="user-role">En ligne <span class="dot-online"></span></div></div></div></div>
 </div>
 <div class="main" id="mc"></div>
 <div class="modal-overlay hidden" id="modal-overlay"></div>
@@ -166,13 +175,9 @@ body::before{content:'';position:fixed;inset:0;z-index:0;pointer-events:none;bac
 const SB_URL='https://fqlqqywybcnkknqfdfvp.supabase.co',SB_KEY='eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImZxbHFxeXd5YmNua2tucWZkZnZwIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzM5NDEwNzYsImV4cCI6MjA4OTUxNzA3Nn0.KtFW-x66KmSId3Gy0ITQ2Gwjohj76yCx6IHQAUkEqkA';
 const sb=supabase.createClient(SB_URL,SB_KEY);
 const svgUp=`<svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>`;
-
-// Section names stored in localStorage so they persist
-let sectionNames=JSON.parse(localStorage.getItem('sectionNames')||'{}');
-function getSecName(sid,sec){return(sectionNames[sid+'_'+sec])||(sec==='fondamentaux'?'Fondamentaux':sec==='rapports'?'Rapports backtest':'Fichiers annexes')}
-function setSecName(sid,sec,name){sectionNames[sid+'_'+sec]=name;localStorage.setItem('sectionNames',JSON.stringify(sectionNames))}
-
-// Notes stored in Supabase messages table (reuse)
+let secNames=JSON.parse(localStorage.getItem('secNames')||'{}');
+function getSN(sid,sec){return secNames[sid+'_'+sec]||(sec==='fondamentaux'?'Fondamentaux':sec==='rapports'?'Rapports backtest':'Fichiers annexes')}
+function setSN(sid,sec,n){secNames[sid+'_'+sec]=n;localStorage.setItem('secNames',JSON.stringify(secNames))}
 function toast(m,e){const t=document.createElement('div');t.className='toast'+(e?' error':'');t.innerHTML=m;document.body.appendChild(t);setTimeout(()=>t.remove(),2500)}
 function hideModal(){document.getElementById('modal-overlay').classList.add('hidden')}
 function setNav(id){document.querySelectorAll('.nav-item').forEach(n=>n.classList.remove('active'));if(id)document.getElementById(id).classList.add('active')}
@@ -181,131 +186,94 @@ function fmtSz(b){if(!b)return'';if(b<1024)return b+' B';if(b<1048576)return Mat
 function stCls(s){return'st-'+s.toLowerCase().replace(/ /g,'-')}
 function esc(s){return(s||'').replace(/\\/g,'\\\\').replace(/'/g,"\\'")}
 async function updateBadges(){const{count:sc}=await sb.from('strategies').select('*',{count:'exact',head:true});const{count:vc}=await sb.from('validated').select('*',{count:'exact',head:true});document.getElementById('badge-s').textContent=sc||0;document.getElementById('badge-v').textContent=vc||0}
-
-function go(v,d){hideModal();
-if(v==='dashboard'){setNav('nav-d');renderDashboard()}
-else if(v==='strategies'){setNav('nav-s');renderStrategies()}
-else if(v==='detail'){setNav('nav-s');renderDetail(d)}
-else if(v==='fp'){setNav('nav-s');renderFP(d)}
-else if(v==='vp'){setNav('nav-v');renderVP(d)}
-else if(v==='validated'){setNav('nav-v');renderValidated()}
-else if(v==='settings'){setNav('nav-p');renderSettings()}}
+let dragId=null;
+function go(v,d){hideModal();if(v==='dashboard'){setNav('nav-d');renderDash()}else if(v==='strategies'){setNav('nav-s');renderStrats()}else if(v==='detail'){setNav('nav-s');renderDetail(d)}else if(v==='fp'){setNav('nav-s');renderFP(d)}else if(v==='vp'){setNav('nav-v');renderVP(d)}else if(v==='validated'){setNav('nav-v');renderVal()}else if(v==='settings'){setNav('nav-p');renderSettings()}}
 
 // ── DASHBOARD ──
-async function renderDashboard(){
-    document.getElementById('mc').innerHTML='<div class="loading">Chargement...</div>';
-    const{count:sc}=await sb.from('strategies').select('*',{count:'exact',head:true});
-    const{count:fc}=await sb.from('files').select('*',{count:'exact',head:true});
-    const{count:vc}=await sb.from('validated').select('*',{count:'exact',head:true});
-    const{data:recentFiles}=await sb.from('files').select('*').order('created_at',{ascending:false}).limit(6);
-    const{data:notes}=await sb.from('messages').select('*').order('id',{ascending:false}).limit(20);
+async function renderDash(){document.getElementById('mc').innerHTML='<div class="loading">Chargement...</div>';
+const{count:sc}=await sb.from('strategies').select('*',{count:'exact',head:true});const{count:fc}=await sb.from('files').select('*',{count:'exact',head:true});const{count:vc}=await sb.from('validated').select('*',{count:'exact',head:true});
+const{data:rf}=await sb.from('files').select('*').order('created_at',{ascending:false}).limit(6);
+const{data:notes}=await sb.from('messages').select('*').order('id',{ascending:false}).limit(20);
+document.getElementById('mc').innerHTML=`<div class="main-header fade-in"><div class="main-title">Dashboard</div></div>
+<div class="dash-stat-row fade-in" style="animation-delay:.05s">
+<div class="dash-stat"><div class="dash-stat-val" style="color:var(--accent)">${sc||0}</div><div class="dash-stat-label">Strategies</div></div>
+<div class="dash-stat"><div class="dash-stat-val" style="color:var(--accent2)">${fc||0}</div><div class="dash-stat-label">Fichiers</div></div>
+<div class="dash-stat"><div class="dash-stat-val" style="color:var(--green)">${vc||0}</div><div class="dash-stat-label">Validees</div></div></div>
+<div class="dash-grid fade-in" style="animation-delay:.1s">
+<div class="dash-card"><div class="dash-card-title">Derniers fichiers</div>${(rf||[]).map(f=>`<div class="recent-file"><div class="file-dot ${dotCls(f.name)}"></div><div class="recent-file-name">${f.name}</div><div class="recent-file-meta">${new Date(f.created_at).toLocaleDateString('fr-FR')}</div></div>`).join('')||'<div style="color:var(--dim);font-size:13px;padding:12px">Aucun fichier</div>'}</div>
+<div class="dash-card"><div class="dash-card-title">Notes</div><div id="nl">${(notes||[]).map(n=>`<div class="note-card"><div class="note-text">${n.content}</div><div class="note-time">${new Date(n.created_at).toLocaleDateString('fr-FR')}</div><div class="note-del" onclick="delNote(${n.id})">&#10005;</div></div>`).join('')||'<div style="color:var(--dim);font-size:13px;padding:12px">Aucune note</div>'}</div>
+<div class="note-input-row"><input class="note-input" placeholder="Ajouter une note..." id="ni" onkeydown="if(event.key==='Enter')addNote()"><button class="note-send" onclick="addNote()">OK</button></div></div></div>`;updateBadges()}
+async function addNote(){const inp=document.getElementById('ni');const t=inp.value.trim();if(!t)return;inp.value='';await sb.from('messages').insert({author:'Note',content:t});renderDash()}
+async function delNote(id){await sb.from('messages').delete().eq('id',id);renderDash()}
 
-    let recentHtml=(recentFiles||[]).map(f=>`<div class="recent-file"><div class="file-dot ${dotCls(f.name)}"></div>
-        <div class="recent-file-name">${f.name}</div>
-        <div class="recent-file-meta">${new Date(f.created_at).toLocaleDateString('fr-FR')}</div></div>`).join('')||'<div style="color:var(--dim);font-size:13px;padding:12px">Aucun fichier</div>';
-
-    let notesHtml=(notes||[]).map(n=>`<div class="note-card"><div class="note-text">${n.content}</div>
-        <div class="note-time">${new Date(n.created_at).toLocaleDateString('fr-FR')}</div>
-        <div class="note-del" onclick="delNote(${n.id})">&#10005;</div></div>`).join('')||'<div style="color:var(--dim);font-size:13px;padding:12px">Aucune note</div>';
-
-    document.getElementById('mc').innerHTML=`
-        <div class="main-header fade-in"><div class="main-title">Dashboard</div></div>
-        <div class="dash-stat-row fade-in" style="animation-delay:.05s">
-            <div class="dash-stat"><div class="dash-stat-val" style="color:var(--accent)">${sc||0}</div><div class="dash-stat-label">Strategies</div></div>
-            <div class="dash-stat"><div class="dash-stat-val" style="color:var(--accent2)">${fc||0}</div><div class="dash-stat-label">Fichiers</div></div>
-            <div class="dash-stat"><div class="dash-stat-val" style="color:var(--green)">${vc||0}</div><div class="dash-stat-label">Validees</div></div>
-        </div>
-        <div class="dash-grid fade-in" style="animation-delay:.1s">
-            <div class="dash-card"><div class="dash-card-title">Derniers fichiers</div>${recentHtml}</div>
-            <div class="dash-card"><div class="dash-card-title">Notes</div>
-                <div id="notes-list">${notesHtml}</div>
-                <div class="note-input-row"><input class="note-input" placeholder="Ajouter une note..." id="note-inp" onkeydown="if(event.key==='Enter')addNote()">
-                <button class="note-send" onclick="addNote()">OK</button></div>
-            </div>
-        </div>`;
-    updateBadges()}
-
-async function addNote(){const inp=document.getElementById('note-inp');const t=inp.value.trim();if(!t)return;inp.value='';
-    await sb.from('messages').insert({author:'Note',content:t});renderDashboard()}
-async function delNote(id){await sb.from('messages').delete().eq('id',id);renderDashboard()}
-
-// ── STRATEGIES (BACKTESTING) ──
-async function renderStrategies(){document.getElementById('mc').innerHTML='<div class="loading">Chargement...</div>';
+// ── STRATEGIES (grouped) ──
+async function renderStrats(){document.getElementById('mc').innerHTML='<div class="loading">Chargement...</div>';
 const{data:st}=await sb.from('strategies').select('*').order('id');const{data:af}=await sb.from('files').select('strategy_id');
 const fc={};(af||[]).forEach(f=>{fc[f.strategy_id]=(fc[f.strategy_id]||0)+1});
-document.getElementById('mc').innerHTML=`<div class="main-header"><div class="main-title">Backtesting</div><button class="btn btn-primary" onclick="showAdd()">+ Nouvelle strategie</button></div>
-<div class="folder-grid">${(st||[]).map((s,i)=>{const c=fc[s.id]||0;return`<div class="folder-card fade-in" style="animation-delay:${i*.04}s" onclick="go('detail',${s.id})">
+const groups={};(st||[]).forEach(s=>{const g=s.group_name||'General';if(!groups[g])groups[g]=[];groups[g].push(s)});
+let html=`<div class="main-header"><div class="main-title">Backtesting</div><button class="btn btn-primary" onclick="showAdd()">+ Nouvelle strategie</button></div>`;
+Object.keys(groups).forEach(g=>{const items=groups[g];
+html+=`<div class="group-section"><div class="group-header">
+<div class="group-name" onclick="editGN(this,'${esc(g)}')">${g}</div><div class="group-count">${items.length} strategie${items.length>1?'s':''}</div></div>
+<div class="drop-zone group-grid" data-group="${g}" ondragover="event.preventDefault();this.classList.add('over')" ondragleave="this.classList.remove('over')" ondrop="dropCard(event,'${esc(g)}')">
+${items.map((s,i)=>{const c=fc[s.id]||0;return`<div class="folder-card fade-in" draggable="true" data-id="${s.id}" ondragstart="dragId=${s.id};this.classList.add('dragging')" ondragend="this.classList.remove('dragging')" onclick="go('detail',${s.id})">
 <div class="folder-top"><span class="folder-status ${stCls(s.status)}">${s.status}</span><div class="folder-actions" onclick="event.stopPropagation()">
-<div class="icon-btn" onclick="editS(${s.id},'${esc(s.name)}','${s.status}')">&#9998;</div><div class="icon-btn danger" onclick="delS(${s.id},'${esc(s.name)}')">&#10005;</div></div></div>
-<div class="folder-name">${s.name}</div>${c?`<div class="folder-meta">${c} fichier${c>1?'s':''}</div>`:`<div class="folder-meta" style="color:var(--dim)">Aucun fichier</div>`}</div>`}).join('')}</div>`;updateBadges()}
+<div class="icon-btn" onclick="editS(${s.id},'${esc(s.name)}','${s.status}','${esc(s.group_name||'General')}')">&#9998;</div><div class="icon-btn danger" onclick="delS(${s.id},'${esc(s.name)}')">&#10005;</div></div></div>
+<div class="folder-name">${s.name}</div>${c?`<div class="folder-meta">${c} fichier${c>1?'s':''}</div>`:`<div class="folder-meta" style="color:var(--dim)">Aucun fichier</div>`}</div>`}).join('')}</div></div>`});
+document.getElementById('mc').innerHTML=html;updateBadges()}
 
-function showAdd(){const o=document.getElementById('modal-overlay');o.classList.remove('hidden');o.innerHTML=`<div class="modal fade-in"><h3>Nouvelle strategie</h3><input class="modal-input" id="m-n" placeholder="Nom" autofocus><div class="modal-row"><button class="btn btn-ghost" onclick="hideModal()">Annuler</button><button class="btn btn-primary" onclick="addS()">Ajouter</button></div></div>`;setTimeout(()=>document.getElementById('m-n')?.focus(),50)}
-async function addS(){const n=document.getElementById('m-n').value.trim();if(!n)return;await sb.from('strategies').insert({name:n,status:'En test'});hideModal();renderStrategies()}
-function editS(id,name,st){const o=document.getElementById('modal-overlay');o.classList.remove('hidden');o.innerHTML=`<div class="modal fade-in"><h3>Modifier</h3><input class="modal-input" id="e-n" value="${name}"><select class="modal-input" id="e-st" style="cursor:pointer;background:var(--bg);color:var(--text)"><option value="En test"${st==='En test'?' selected':''}>En test</option><option value="Validee"${st==='Validee'?' selected':''}>Validee</option><option value="En prod"${st==='En prod'?' selected':''}>En prod</option></select><div class="modal-row"><button class="btn btn-ghost" onclick="hideModal()">Annuler</button><button class="btn btn-primary" onclick="saveS(${id})">OK</button></div></div>`}
-async function saveS(id){const n=document.getElementById('e-n').value.trim(),st=document.getElementById('e-st').value;if(n)await sb.from('strategies').update({name:n,status:st}).eq('id',id);hideModal();renderStrategies()}
+function editGN(el,old){el.outerHTML=`<input class="group-name-input" value="${old}" onblur="saveGN(this,'${esc(old)}')" onkeydown="if(event.key==='Enter')this.blur()">`;const inp=document.querySelector('.group-name-input');if(inp){inp.focus();inp.select()}}
+async function saveGN(inp,old){const n=inp.value.trim();if(n&&n!==old){await sb.from('strategies').update({group_name:n}).eq('group_name',old)}renderStrats()}
+async function dropCard(e,group){e.preventDefault();e.currentTarget.classList.remove('over');if(!dragId)return;await sb.from('strategies').update({group_name:group}).eq('id',dragId);dragId=null;renderStrats()}
+
+function showAdd(){const o=document.getElementById('modal-overlay');o.classList.remove('hidden');o.innerHTML=`<div class="modal fade-in"><h3>Nouvelle strategie</h3><input class="modal-input" id="m-n" placeholder="Nom" autofocus><input class="modal-input" id="m-g" placeholder="Groupe (ex: Asian Sweep)"><div class="modal-row"><button class="btn btn-ghost" onclick="hideModal()">Annuler</button><button class="btn btn-primary" onclick="addS()">Ajouter</button></div></div>`;setTimeout(()=>document.getElementById('m-n')?.focus(),50)}
+async function addS(){const n=document.getElementById('m-n').value.trim(),g=document.getElementById('m-g').value.trim()||'General';if(!n)return;await sb.from('strategies').insert({name:n,status:'En test',group_name:g});hideModal();renderStrats()}
+function editS(id,name,st,grp){const o=document.getElementById('modal-overlay');o.classList.remove('hidden');o.innerHTML=`<div class="modal fade-in"><h3>Modifier</h3><input class="modal-input" id="e-n" value="${name}"><input class="modal-input" id="e-g" value="${grp}" placeholder="Groupe"><select class="modal-input" id="e-st" style="cursor:pointer;background:var(--bg);color:var(--text)"><option value="En test"${st==='En test'?' selected':''}>En test</option><option value="Validee"${st==='Validee'?' selected':''}>Validee</option><option value="En prod"${st==='En prod'?' selected':''}>En prod</option></select><div class="modal-row"><button class="btn btn-ghost" onclick="hideModal()">Annuler</button><button class="btn btn-primary" onclick="saveS(${id})">OK</button></div></div>`}
+async function saveS(id){const n=document.getElementById('e-n').value.trim(),st=document.getElementById('e-st').value,g=document.getElementById('e-g').value.trim()||'General';if(n)await sb.from('strategies').update({name:n,status:st,group_name:g}).eq('id',id);hideModal();renderStrats()}
 function delS(id,name){const o=document.getElementById('modal-overlay');o.classList.remove('hidden');o.innerHTML=`<div class="modal fade-in"><h3>Supprimer "${name}" ?</h3><p>Irreversible.</p><div class="modal-row"><button class="btn btn-ghost" onclick="hideModal()">Annuler</button><button class="btn btn-danger" onclick="confirmDelS(${id})">Supprimer</button></div></div>`}
-async function confirmDelS(id){const{data:fs}=await sb.from('files').select('file_path').eq('strategy_id',id);if(fs?.length)await sb.storage.from('files').remove(fs.map(f=>f.file_path));await sb.from('files').delete().eq('strategy_id',id);await sb.from('strategies').delete().eq('id',id);hideModal();renderStrategies()}
+async function confirmDelS(id){const{data:fs}=await sb.from('files').select('file_path').eq('strategy_id',id);if(fs?.length)await sb.storage.from('files').remove(fs.map(f=>f.file_path));await sb.from('files').delete().eq('strategy_id',id);await sb.from('strategies').delete().eq('id',id);hideModal();renderStrats()}
 
-// ── DETAIL (3 sections: annexes, fondamentaux, rapports) ──
-let curSid=null;
-const sections=['annexes','fondamentaux','rapports'];
-const defaultSecNames={annexes:'Fichiers annexes',fondamentaux:'Fondamentaux',rapports:'Rapports backtest'};
-
+// ── DETAIL ──
+let curSid=null;const secs=['annexes','fondamentaux','rapports'];
 async function renderDetail(id){curSid=id;document.getElementById('mc').innerHTML='<div class="loading">Chargement...</div>';
 const{data:s}=await sb.from('strategies').select('*').eq('id',id).single();if(!s){go('strategies');return}
 const{data:fs}=await sb.from('files').select('*').eq('strategy_id',id).order('id');
-
 function fl(arr,sec){if(!arr.length)return`<div class="empty-files">Aucun fichier</div>`;
 return`<div class="file-list">${arr.map((f,i)=>{const isH=f.name.endsWith('.html')||f.name.endsWith('.htm');
 return`<div class="file-row fade-in" style="animation-delay:${i*.03}s"><div class="file-dot ${dotCls(f.name)}"></div>
-<div class="file-info"><div class="file-name" onclick="event.stopPropagation();rnStart(${f.id},'${esc(f.name)}')" title="Renommer">${f.name}</div>
+<div class="file-info"><div class="file-name" onclick="event.stopPropagation();rnS(${f.id},'${esc(f.name)}')">${f.name}</div>
 <div class="file-meta">${fmtSz(f.size)} &middot; ${new Date(f.created_at).toLocaleDateString('fr-FR')}</div></div>
 <div class="file-actions">${isH?`<button class="file-preview-btn" onclick="event.stopPropagation();go('fp',{fid:${f.id},sid:${id},fn:'${esc(f.name)}',fp:'${f.file_path}',sn:'${esc(s.name)}'})">Voir</button>`:''}
 <button class="file-action-btn star" onclick="event.stopPropagation();starF(${f.id},'${esc(f.name)}','${f.file_path}',${f.size||0},'${esc(s.name)}','${sec}')">&#9733;</button>
 <button class="file-action-btn del" onclick="event.stopPropagation();delF(${f.id},'${f.file_path}',${id})">&#10005;</button></div></div>`}).join('')}</div>`}
-
 function ub(sec){return`<label class="upload-btn">${svgUp} Telecharger<input type="file" class="upload-input" multiple onchange="upF(${id},'${sec}',this.files);this.value=''"></label>`}
-
-function secLabel(sec){const name=getSecName(id,sec);
-return`<div class="section-label" onclick="editSecName(${id},'${sec}',this)" title="Cliquer pour renommer">${name}</div>`}
-
-let html=`<div class="back-row fade-in"><div class="back-btn" onclick="go('strategies')"><span>&larr;</span> Retour</div><div class="breadcrumb"><span onclick="go('strategies')">Backtesting</span><span class="bc-sep">&#9656;</span><span>${s.name}</span></div></div>
+let h=`<div class="back-row fade-in"><div class="back-btn" onclick="go('strategies')"><span>&larr;</span> Retour</div><div class="breadcrumb"><span onclick="go('strategies')">Backtesting</span><span class="bc-sep">&#9656;</span><span>${s.name}</span></div></div>
 <div class="main-header fade-in" style="animation-delay:.05s"><div class="main-title">${s.name}</div><span class="folder-status ${stCls(s.status)}" style="font-size:12px;padding:6px 16px">${s.status}</span></div>`;
-
-let delay=0.08;
-for(const sec of sections){
-    const arr=(fs||[]).filter(f=>f.section===sec);
-    html+=`<div class="section-row fade-in" style="animation-delay:${delay}s">${secLabel(sec)}${ub(sec)}</div>${fl(arr,sec)}`;
-    delay+=0.06}
-
-document.getElementById('mc').innerHTML=html}
-
-function editSecName(sid,sec,el){const cur=getSecName(sid,sec);
-el.outerHTML=`<input class="section-label-input" value="${cur}" onblur="saveSecName(${sid},'${sec}',this)" onkeydown="if(event.key==='Enter')this.blur()">`;
-const inp=document.querySelector('.section-label-input');if(inp){inp.focus();inp.select()}}
-function saveSecName(sid,sec,inp){const n=inp.value.trim();if(n)setSecName(sid,sec,n);renderDetail(sid)}
-
+let d=0.08;for(const sec of secs){const arr=(fs||[]).filter(f=>f.section===sec);const sn=getSN(id,sec);
+h+=`<div class="section-row fade-in" style="animation-delay:${d}s"><div class="section-label" onclick="editSN(${id},'${sec}',this)">${sn}</div>${ub(sec)}</div>${fl(arr,sec)}`;d+=.06}
+document.getElementById('mc').innerHTML=h}
+function editSN(sid,sec,el){const cur=getSN(sid,sec);el.outerHTML=`<input class="section-label-input" value="${cur}" onblur="saveSN(${sid},'${sec}',this)" onkeydown="if(event.key==='Enter')this.blur()">`;const inp=document.querySelector('.section-label-input');if(inp){inp.focus();inp.select()}}
+function saveSN(sid,sec,inp){const n=inp.value.trim();if(n)setSN(sid,sec,n);renderDetail(sid)}
 async function upF(sid,sec,fl){for(const f of fl){const p=`${sid}/${sec}/${Date.now()}_${f.name}`;const{error}=await sb.storage.from('files').upload(p,f);if(error){toast('Erreur: '+error.message,true);continue}await sb.from('files').insert({strategy_id:sid,section:sec,name:f.name,file_path:p,size:f.size})}toast('&#10003; Upload OK');renderDetail(sid)}
 async function delF(fid,p,sid){await sb.storage.from('files').remove([p]);await sb.from('files').delete().eq('id',fid);renderDetail(sid)}
-function rnStart(fid,cur){const el=event.target;el.outerHTML=`<input class="file-name-input" value="${cur}" onblur="rnEnd(${fid},this)" onkeydown="if(event.key==='Enter')this.blur()">`;const inp=document.querySelector('.file-name-input');if(inp){inp.focus();inp.select()}}
-async function rnEnd(fid,inp){const n=inp.value.trim();if(n)await sb.from('files').update({name:n}).eq('id',fid);if(curSid)renderDetail(curSid)}
+function rnS(fid,cur){const el=event.target;el.outerHTML=`<input class="file-name-input" value="${cur}" onblur="rnE(${fid},this)" onkeydown="if(event.key==='Enter')this.blur()">`;const inp=document.querySelector('.file-name-input');if(inp){inp.focus();inp.select()}}
+async function rnE(fid,inp){const n=inp.value.trim();if(n)await sb.from('files').update({name:n}).eq('id',fid);if(curSid)renderDetail(curSid)}
 
-// ── STAR / VALIDATE ──
+// ── STAR ──
 function starF(fid,name,path,size,sn,sec){if(sec==='rapports'){showValModal(fid,name,path,size,sn)}else{simpleStar(name,path,size,sn,sec)}}
-async function simpleStar(name,path,size,sn,sec){await sb.from('validated').insert({name,file_path:path,size,origin_strategy:sn,origin_section:getSecName(0,sec)});updateBadges();toast('&#9733; <b>'+name+'</b> dans Validees')}
-
+async function simpleStar(name,path,size,sn,sec){await sb.from('validated').insert({name,file_path:path,size,origin_strategy:sn,origin_section:getSN(0,sec)});updateBadges();toast('&#9733; <b>'+name+'</b> dans Validees')}
 function showValModal(fid,name,path,size,sn){const o=document.getElementById('modal-overlay');o.classList.remove('hidden');
 o.innerHTML=`<div class="modal fade-in"><h3>&#9733; Valider une configuration</h3><p>Parametres de la config choisie dans <b>${name}</b></p>
-<input class="modal-input" id="v-name" placeholder="Nom (ex: ${sn} - Config #3)" value="${sn} - Config #">
+<input class="modal-input" id="v-name" placeholder="Nom" value="${sn} - Config #">
 <div class="modal-grid">
 <div class="modal-field"><label>Config #</label><input id="v-cfg" placeholder="3"></div>
 <div class="modal-field"><label>TP (pts)</label><input id="v-tp" placeholder="175"></div>
 <div class="modal-field"><label>SL (pts)</label><input id="v-sl" placeholder="195"></div>
 <div class="modal-field"><label>BE (%)</label><input id="v-be" placeholder="80%"></div>
 <div class="modal-field"><label>Buffer</label><input id="v-buf" placeholder="45"></div>
-<div class="modal-field"><label>Avec BE</label><select id="v-withbe"><option value="Oui">Oui</option><option value="Non">Non</option></select></div>
-<div class="modal-field"><label>SL max autorise</label><input id="v-slmax" placeholder="3"></div>
-<div class="modal-field"><label>Stop au 1er TP</label><select id="v-stoptp"><option value="Oui">Oui</option><option value="Non">Non</option></select></div>
+<div class="modal-field"><label>Avec BE</label><select id="v-wbe"><option value="Oui">Oui</option><option value="Non">Non</option></select></div>
+<div class="modal-field"><label>SL max autorise</label><input id="v-slm" placeholder="3"></div>
+<div class="modal-field"><label>Stop au 1er TP</label><select id="v-stp"><option value="Oui">Oui</option><option value="Non">Non</option></select></div>
 <div class="modal-field"><label>PnL</label><input id="v-pnl" placeholder="+34,400 €"></div>
 <div class="modal-field"><label>Max DD</label><input id="v-dd" placeholder="-3,240 €"></div>
 <div class="modal-field"><label>Win Rate</label><input id="v-wr" placeholder="66.7%"></div>
@@ -314,23 +282,18 @@ o.innerHTML=`<div class="modal fade-in"><h3>&#9733; Valider une configuration</h
 <div class="modal-field"><label>Trades</label><input id="v-tr" placeholder="24"></div>
 <div class="modal-field"><label>Sharpe</label><input id="v-sh" placeholder="1.58"></div>
 </div>
-<div class="modal-row"><button class="btn btn-ghost" onclick="hideModal()">Annuler</button><button class="btn btn-primary" onclick="submitVal('${esc(name)}','${path}',${size},'${esc(sn)}')">&#9733; Valider</button></div></div>`;
-setTimeout(()=>document.getElementById('v-cfg')?.focus(),50)}
-
+<div class="modal-row"><button class="btn btn-ghost" onclick="hideModal()">Annuler</button><button class="btn btn-primary" onclick="submitVal('${esc(name)}','${path}',${size},'${esc(sn)}')">&#9733; Valider</button></div></div>`;setTimeout(()=>document.getElementById('v-cfg')?.focus(),50)}
 async function submitVal(fn,path,size,sn){const name=document.getElementById('v-name').value.trim()||sn;
-const withBe=document.getElementById('v-withbe').value;
-const stopTp=document.getElementById('v-stoptp').value;
-const beVal=document.getElementById('v-be').value.trim()+(withBe==='Non'?' (desactive)':'');
-const bufVal=document.getElementById('v-buf').value.trim();
-const slMaxVal=document.getElementById('v-slmax').value.trim();
-await sb.from('validated').insert({name,file_path:path,size,origin_strategy:sn,origin_section:'Rapports backtest',
-config_number:document.getElementById('v-cfg').value.trim(),tp:document.getElementById('v-tp').value.trim(),
-sl:document.getElementById('v-sl').value.trim()+(slMaxVal?' (max:'+slMaxVal+')':''),
-be_trigger:beVal,buffer:bufVal,
-pnl:document.getElementById('v-pnl').value.trim(),max_dd:document.getElementById('v-dd').value.trim(),
-win_rate:document.getElementById('v-wr').value.trim(),profit_factor:document.getElementById('v-pf').value.trim(),
-calmar:document.getElementById('v-cal').value.trim(),trades:document.getElementById('v-tr').value.trim(),
-sharpe:document.getElementById('v-sh').value.trim()});
+const wbe=document.getElementById('v-wbe').value,stp=document.getElementById('v-stp').value;
+const be=document.getElementById('v-be').value.trim()+(wbe==='Non'?' (off)':'');
+const slm=document.getElementById('v-slm').value.trim();
+const sl=document.getElementById('v-sl').value.trim()+(slm?' (max:'+slm+')':'');
+const sub='Depuis : '+sn+' · Rapports backtest · '+new Date().toLocaleDateString('fr-FR');
+await sb.from('validated').insert({name,file_path:path,size,origin_strategy:sn,origin_section:'Rapports backtest',subtitle:sub,
+config_number:document.getElementById('v-cfg').value.trim(),tp:document.getElementById('v-tp').value.trim(),sl,be_trigger:be,buffer:document.getElementById('v-buf').value.trim(),
+pnl:document.getElementById('v-pnl').value.trim(),max_dd:document.getElementById('v-dd').value.trim(),win_rate:document.getElementById('v-wr').value.trim(),
+profit_factor:document.getElementById('v-pf').value.trim(),calmar:document.getElementById('v-cal').value.trim(),trades:document.getElementById('v-tr').value.trim(),
+sharpe:document.getElementById('v-sh').value.trim(),custom_params:JSON.stringify(stp==='Oui'?[{l:'Stop 1er TP',v:'Oui'}]:[{l:'Stop 1er TP',v:'Non'}])});
 updateBadges();hideModal();toast('&#9733; <b>'+name+'</b> valide !')}
 
 // ── FILE PREVIEW ──
@@ -347,21 +310,36 @@ setTimeout(()=>{const f=document.getElementById('pvi');if(f){const d2=f.contentD
 function openFS(id){const e=document.getElementById(id);if(e.requestFullscreen)e.requestFullscreen();else if(e.webkitRequestFullscreen)e.webkitRequestFullscreen()}
 
 // ── VALIDATED ──
-async function renderValidated(){document.getElementById('mc').innerHTML='<div class="loading">Chargement...</div>';
+async function renderVal(){document.getElementById('mc').innerHTML='<div class="loading">Chargement...</div>';
 const{data:vs}=await sb.from('validated').select('*').order('id',{ascending:false});
-if(!vs?.length){document.getElementById('mc').innerHTML=`<div class="main-header fade-in"><div class="main-title">Validees</div></div>
-<div class="empty-state fade-in"><div style="font-size:48px;opacity:0.3;margin-bottom:16px">&#9733;</div><p>Aucune config validee.<br>Cliquez l'etoile d'un rapport backtest.</p></div>`;return}
+if(!vs?.length){document.getElementById('mc').innerHTML=`<div class="main-header fade-in"><div class="main-title">Validees</div></div><div class="empty-state fade-in"><div style="font-size:48px;opacity:0.3;margin-bottom:16px">&#9733;</div><p>Aucune config validee.<br>Cliquez l'etoile d'un rapport backtest.</p></div>`;return}
 document.getElementById('mc').innerHTML=`<div class="main-header fade-in"><div class="main-title">Validees</div></div>
 ${vs.map((v,i)=>{const hp=v.tp||v.sl||v.pnl;const isH=(v.file_path||'').includes('.htm');
+let customP=[];try{customP=JSON.parse(v.custom_params||'[]')}catch(e){}
 let kpis='',params='';
 if(hp){const kd=[v.pnl?{l:'PnL',v:v.pnl,c:'g'}:0,v.max_dd?{l:'Max DD',v:v.max_dd,c:'r'}:0,v.win_rate?{l:'Win Rate',v:v.win_rate,c:'g'}:0,v.calmar?{l:'Calmar',v:v.calmar,c:'b'}:0,v.profit_factor?{l:'PF',v:v.profit_factor,c:'g'}:0,v.sharpe?{l:'Sharpe',v:v.sharpe,c:'b'}:0].filter(Boolean);
 if(kd.length)kpis=`<div class="kpi-strip">${kd.map(k=>`<div class="kpi-box"><div class="kpi-label">${k.l}</div><div class="kpi-val ${k.c}">${k.v}</div></div>`).join('')}</div>`;
-const pd=[v.tp?{l:'TP',v:v.tp,s:'color:var(--green)'}:0,v.sl?{l:'SL',v:v.sl,s:'color:var(--red)'}:0,v.be_trigger?{l:'BE',v:v.be_trigger,s:''}:0,v.buffer?{l:'Buffer',v:v.buffer,s:''}:0,v.trades?{l:'Trades',v:v.trades,s:''}:0,v.config_number?{l:'Config',v:'#'+v.config_number,s:'color:var(--accent)'}:0].filter(Boolean);
-if(pd.length)params=`<div class="params-row">${pd.map(p=>`<div class="param-chip"><div class="param-chip-label">${p.l}</div><div class="param-chip-val" style="${p.s}">${p.v}</div></div>`).join('')}</div>`}
+const pd=[v.tp?{l:'TP',v:v.tp,s:'color:var(--green)'}:0,v.sl?{l:'SL',v:v.sl,s:'color:var(--red)'}:0,v.be_trigger?{l:'BE',v:v.be_trigger,s:''}:0,v.buffer?{l:'Buffer',v:v.buffer,s:''}:0,v.trades?{l:'Trades',v:v.trades,s:''}:0,v.config_number?{l:'Config',v:'#'+v.config_number,s:'color:var(--accent)'}:0,...customP.map(c=>({l:c.l,v:c.v,s:'color:var(--accent2)'}))].filter(Boolean);
+if(pd.length)params=`<div class="params-row">${pd.map(p=>`<div class="param-chip"><div class="param-chip-label">${p.l}</div><div class="param-chip-val" style="${p.s||''}">${p.v}</div></div>`).join('')}<div class="add-chip-btn" onclick="addChip(${v.id})" title="Ajouter un parametre">+</div></div>`}
+const subtitle=v.subtitle||('Depuis : '+(v.origin_strategy||'?')+' · '+(v.origin_section||'?')+' · '+new Date(v.created_at).toLocaleDateString('fr-FR'));
 return`<div class="val-card fade-in" style="animation-delay:${i*.04}s"><div class="val-header"><div><div class="val-name">${v.name}</div>
-<div class="val-origin">Depuis : ${v.origin_strategy||'?'} &middot; ${v.origin_section||'?'} &middot; ${new Date(v.created_at).toLocaleDateString('fr-FR')}</div></div>
+<div class="val-subtitle" onclick="editValSub(${v.id},this)">${subtitle}</div></div>
 <div class="val-actions">${isH?`<button class="file-preview-btn" onclick="go('vp',{id:${v.id},name:'${esc(v.name)}',path:'${v.file_path}'})">Voir rapport</button>`:''}<button class="file-action-btn del" onclick="remVal(${v.id})">&#10005;</button></div></div>${kpis}${params}</div>`}).join('')}`}
-async function remVal(id){await sb.from('validated').delete().eq('id',id);updateBadges();renderValidated()}
+
+function editValSub(id,el){const cur=el.textContent;el.outerHTML=`<input class="val-subtitle-input" value="${cur}" onblur="saveValSub(${id},this)" onkeydown="if(event.key==='Enter')this.blur()">`;const inp=document.querySelector('.val-subtitle-input');if(inp){inp.focus();inp.select()}}
+async function saveValSub(id,inp){const n=inp.value.trim();if(n)await sb.from('validated').update({subtitle:n}).eq('id',id);renderVal()}
+
+function addChip(vid){const o=document.getElementById('modal-overlay');o.classList.remove('hidden');
+o.innerHTML=`<div class="modal fade-in"><h3>Ajouter un parametre</h3>
+<div class="modal-grid"><div class="modal-field"><label>Nom</label><input id="cp-l" placeholder="Ex: Timeframe"></div>
+<div class="modal-field"><label>Valeur</label><input id="cp-v" placeholder="Ex: 15min"></div></div>
+<div class="modal-row"><button class="btn btn-ghost" onclick="hideModal()">Annuler</button><button class="btn btn-primary" onclick="saveChip(${vid})">Ajouter</button></div></div>`;setTimeout(()=>document.getElementById('cp-l')?.focus(),50)}
+async function saveChip(vid){const l=document.getElementById('cp-l').value.trim(),v=document.getElementById('cp-v').value.trim();if(!l||!v)return;
+const{data}=await sb.from('validated').select('custom_params').eq('id',vid).single();
+let arr=[];try{arr=JSON.parse(data.custom_params||'[]')}catch(e){}
+arr.push({l,v});await sb.from('validated').update({custom_params:JSON.stringify(arr)}).eq('id',vid);hideModal();renderVal()}
+
+async function remVal(id){await sb.from('validated').delete().eq('id',id);updateBadges();renderVal()}
 
 async function renderVP(d){document.getElementById('mc').innerHTML='<div class="loading">Chargement...</div>';
 const url=sb.storage.from('files').getPublicUrl(d.path).data.publicUrl;let html='';
@@ -375,7 +353,7 @@ document.getElementById('mc').innerHTML=`<div class="back-row fade-in"><div clas
 setTimeout(()=>{const f=document.getElementById('pvi');if(f){const d2=f.contentDocument||f.contentWindow.document;d2.open();d2.write(html);d2.close()}},150)}
 
 // ── SETTINGS ──
-function renderSettings(){document.getElementById('mc').innerHTML=`<div class="main-header fade-in"><div class="main-title">Parametres</div></div><div class="fade-in" style="animation-delay:.05s"><div class="settings-section"><div class="section-label" style="margin-bottom:16px;cursor:default;border:none">Profil</div><div class="settings-label">Nom</div><input class="settings-input" value="Trader"><div class="settings-label" style="margin-top:16px">Role</div><input class="settings-input" value="Trader"></div><div class="settings-section"><div class="section-label" style="margin-bottom:16px;cursor:default;border:none">Apparence</div><div style="display:flex;gap:10px"><button class="btn btn-ghost" style="opacity:0.5;pointer-events:none">Clair</button><button class="btn btn-primary" style="pointer-events:none">Sombre</button></div></div></div>`}
+function renderSettings(){document.getElementById('mc').innerHTML=`<div class="main-header fade-in"><div class="main-title">Parametres</div></div><div class="fade-in" style="animation-delay:.05s"><div class="settings-section"><div style="font-size:13px;font-weight:600;letter-spacing:2px;text-transform:uppercase;color:var(--dim);margin-bottom:16px">Profil</div><div class="settings-label">Nom</div><input class="settings-input" value="Trader"><div class="settings-label" style="margin-top:16px">Role</div><input class="settings-input" value="Trader"></div><div class="settings-section"><div style="font-size:13px;font-weight:600;letter-spacing:2px;text-transform:uppercase;color:var(--dim);margin-bottom:16px">Apparence</div><div style="display:flex;gap:10px"><button class="btn btn-ghost" style="opacity:0.5;pointer-events:none">Clair</button><button class="btn btn-primary" style="pointer-events:none">Sombre</button></div></div></div>`}
 
 document.getElementById('modal-overlay').addEventListener('click',function(e){if(e.target===this)hideModal()});
 document.addEventListener('keydown',function(e){if(e.key==='Escape')hideModal()});
